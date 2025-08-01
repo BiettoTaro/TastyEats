@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using Npgsql;
 
-namespace TastyEats.Models
+namespace TastyEats.Data
 {
     public static class DatabaseHandler
     {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TastyEats.Data;
 
 namespace TastyEats
 {
@@ -21,7 +22,7 @@ namespace TastyEats
         {
             try
             {
-                using (var connection = TastyEats.Models.DatabaseHandler.GetConnection())
+                using (var connection = DatabaseHandler.GetConnection())
                 {
                     connection.Open();
                     // Check how may tables are in the database

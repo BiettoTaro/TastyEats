@@ -8,5 +8,7 @@ namespace TastyEats.Models
 {
     internal class Cart
     {
+        public static List<CartItem> Items { get; set; } = new List<CartItem>();
+       
     }
 }
