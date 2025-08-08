@@ -32,33 +32,38 @@
             descriptionLabel = new Label();
             priceLabel = new Label();
             pictureBoxItem = new PictureBox();
+            label2 = new Label();
+            addButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxItem).BeginInit();
             SuspendLayout();
             // 
             // nameLabel
             // 
-            nameLabel.AutoSize = true;
+            nameLabel.Font = new Font("Verdana", 11.1F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nameLabel.Location = new Point(140, 0);
+            nameLabel.MaximumSize = new Size(150, 0);
             nameLabel.Name = "nameLabel";
-            nameLabel.Size = new Size(39, 15);
-            nameLabel.TabIndex = 0;
-            nameLabel.Text = "Name";
+            nameLabel.Size = new Size(150, 40);
+            nameLabel.TabIndex = 4;
             // 
             // descriptionLabel
             // 
             descriptionLabel.AutoSize = true;
-            descriptionLabel.Location = new Point(140, 43);
+            descriptionLabel.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            descriptionLabel.Location = new Point(140, 56);
+            descriptionLabel.MaximumSize = new Size(124, 0);
             descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new Size(67, 15);
+            descriptionLabel.Size = new Size(77, 14);
             descriptionLabel.TabIndex = 1;
             descriptionLabel.Text = "Description";
             // 
             // priceLabel
             // 
             priceLabel.AutoSize = true;
-            priceLabel.Location = new Point(140, 93);
+            priceLabel.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            priceLabel.Location = new Point(211, 133);
             priceLabel.Name = "priceLabel";
-            priceLabel.Size = new Size(33, 15);
+            priceLabel.Size = new Size(41, 14);
             priceLabel.TabIndex = 2;
             priceLabel.Text = "Price";
             // 
@@ -71,16 +76,35 @@
             pictureBoxItem.TabIndex = 3;
             pictureBoxItem.TabStop = false;
             // 
+            // label2
+            // 
+            label2.Location = new Point(0, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(100, 23);
+            label2.TabIndex = 0;
+            // 
+            // addButton
+            // 
+            addButton.Location = new Point(3, 129);
+            addButton.Name = "addButton";
+            addButton.Size = new Size(75, 23);
+            addButton.TabIndex = 5;
+            addButton.Text = "Add";
+            addButton.UseVisualStyleBackColor = true;
+            addButton.Click += addButton_Click;
+            // 
             // MenuItemCard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BorderStyle = BorderStyle.Fixed3D;
+            Controls.Add(addButton);
             Controls.Add(pictureBoxItem);
             Controls.Add(priceLabel);
             Controls.Add(descriptionLabel);
             Controls.Add(nameLabel);
             Name = "MenuItemCard";
-            Size = new Size(300, 120);
+            Size = new Size(294, 157);
             ((System.ComponentModel.ISupportInitialize)pictureBoxItem).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -93,5 +117,7 @@
         private Label priceLabel;
         private PictureBox pictureBoxItem;
         private Label label1;
+        private Label label2;
+        private Button addButton;
     }
 }

@@ -43,5 +43,18 @@ namespace TastyEats
                 pictureBoxItem.Image = null; // or set a default image
             }
         }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            using (var popup = new Views.AddPopup(ItemName, pictureBoxItem.Image, ItemPrice,ItemId))
+            {
+                if (popup.ShowDialog() == DialogResult.OK && popup.CreatedItem != null)
+                {
+                    Controllers.CartController.AddToCart(popup.CreatedItem);
+                    MessageBox.Show($"{popup.CreatedItem.Name} x{popup.CreatedItem.Quantity} added to your cart!",
+                                    "Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
     }
 }

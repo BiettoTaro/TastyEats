@@ -39,11 +39,20 @@ namespace TastyEats
                     );
                     menuFlowPanel.Controls.Add(card);
                 }
-            } catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading menu items: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading menu items: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private void btnCart_Click(object sender, EventArgs e)
+        {
+            var cartForm = new Views.CartForm();
+            cartForm.ShowDialog();
+        }
+
+
 
         //private void btnAddToCart_Click(object sender, EventArgs e)
         //{
