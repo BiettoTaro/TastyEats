@@ -31,7 +31,7 @@
             cartPanel.AutoScroll = true;
             cartPanel.Location = new Point(12, 12);
             cartPanel.Name = "cartPanel";
-            cartPanel.Size = new Size(460, 300);
+            cartPanel.Size = new Size(560, 300);
             cartPanel.TabIndex = 0;
             // 
             // totalLabel
@@ -45,29 +45,29 @@
             // 
             // btnCheckout
             // 
-            btnCheckout.Location = new Point(372, 320);
+            btnCheckout.Location = new Point(472, 320);
             btnCheckout.Name = "btnCheckout";
             btnCheckout.Size = new Size(100, 30);
             btnCheckout.TabIndex = 2;
             btnCheckout.Text = "Checkout";
             btnCheckout.UseVisualStyleBackColor = true;
-            btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
+            btnCheckout.Click += btnCheckout_Click;
             // 
             // btnClearCart
             // 
-            btnClearCart.Location = new Point(266, 320);
+            btnClearCart.Location = new Point(366, 320);
             btnClearCart.Name = "btnClearCart";
             btnClearCart.Size = new Size(100, 30);
             btnClearCart.TabIndex = 3;
             btnClearCart.Text = "Clear Cart";
             btnClearCart.UseVisualStyleBackColor = true;
-            btnClearCart.Click += new System.EventHandler(this.btnClearCart_Click);
+            btnClearCart.Click += btnClearCart_Click;
             // 
             // CartForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(484, 361);
+            ClientSize = new Size(584, 361);
             Controls.Add(btnClearCart);
             Controls.Add(btnCheckout);
             Controls.Add(totalLabel);

@@ -40,7 +40,7 @@
             menuFlowPanel.Dock = DockStyle.Fill;
             menuFlowPanel.Location = new Point(0, 40);
             menuFlowPanel.Name = "menuFlowPanel";
-            menuFlowPanel.Size = new Size(800, 410);
+            menuFlowPanel.Size = new Size(624, 521);
             menuFlowPanel.TabIndex = 0;
             // 
             // topBarPanel
@@ -50,28 +50,29 @@
             topBarPanel.Dock = DockStyle.Top;
             topBarPanel.Location = new Point(0, 0);
             topBarPanel.Name = "topBarPanel";
-            topBarPanel.Size = new Size(800, 40);
+            topBarPanel.Size = new Size(624, 40);
             topBarPanel.TabIndex = 1;
             // 
             // btnCart
             // 
             btnCart.Dock = DockStyle.Right;
-            btnCart.Location = new Point(720, 0);
+            btnCart.Location = new Point(544, 0);
             btnCart.Margin = new Padding(0, 5, 10, 5);
             btnCart.Name = "btnCart";
             btnCart.Size = new Size(80, 40);
             btnCart.TabIndex = 0;
             btnCart.Text = "\U0001f6d2 Cart";
-            btnCart.Click += new EventHandler(this.btnCart_Click);
+            btnCart.Click += btnCart_Click;
             // 
             // MenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(624, 561);
             Controls.Add(menuFlowPanel);
             Controls.Add(topBarPanel);
             Name = "MenuForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MenuForm";
             topBarPanel.ResumeLayout(false);
             ResumeLayout(false);
