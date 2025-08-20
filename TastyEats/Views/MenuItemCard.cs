@@ -34,6 +34,8 @@ namespace TastyEats
             priceLabel.Text = $"£{price:F2}";
 
             string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, imagePath);
+            
+
             if (File.Exists(fullPath))
             {
                 pictureBoxItem.Image = Image.FromFile(fullPath);
@@ -46,6 +48,7 @@ namespace TastyEats
 
         private void addButton_Click(object sender, EventArgs e)
         {
+            
             using (var popup = new Views.AddPopup(ItemName, pictureBoxItem.Image, ItemPrice,ItemId))
             {
                 if (popup.ShowDialog() == DialogResult.OK && popup.CreatedItem != null)
@@ -55,6 +58,7 @@ namespace TastyEats
                                     "Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+            
         }
     }
 }

@@ -11,12 +11,13 @@ using TastyEats.Data;
 
 namespace TastyEats
 {
-    public partial class MenuForm : Form
+    public partial class MenuForm : BaseForm
     {
         public MenuForm()
         {
             InitializeComponent();
             LoadMenuItems();
+            
         }
 
         private void LoadMenuItems()
@@ -48,36 +49,14 @@ namespace TastyEats
 
         private void btnCart_Click(object sender, EventArgs e)
         {
+            this.Hide(); // Hide the menu form
             var cartForm = new Views.CartForm();
+
             cartForm.ShowDialog();
+
+            this.Show(); // Show the menu form again after cart is closed
         }
 
-
-
-        //private void btnAddToCart_Click(object sender, EventArgs e)
-        //{
-        //    if (menuGridView.SelectedRows.Count > 0)
-        //    {
-        //        var selectedRow = menuGridView.SelectedRows[0];
-        //        int itemId = Convert.ToInt32(selectedRow.Cells["item_id"].Value);
-        //        string name = selectedRow.Cells["name"].Value.ToString();
-        //        decimal price = Convert.ToDecimal(selectedRow.Cells["price"].Value);
-        //        int quantity = (int)numericUpDownQuantity.Value;
-        //        Models.CartItem cartItem = new Models.CartItem
-        //        {
-        //            ItemId = itemId,
-        //            Name = name,
-        //            Price = price,
-        //            Quantity = quantity
-        //        };
-        //        Controllers.CartController.AddToCart(cartItem);
-        //        MessageBox.Show($"{name} has been added to your cart.", "Item Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Please select an item to add to the cart.", "No Item Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //    }
-        //}
-
+        
     }
 }

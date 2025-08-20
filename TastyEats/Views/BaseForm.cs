@@ -1,0 +1,70 @@
+﻿using System;
+using System.Windows.Forms;
+using TastyEats.Views;
+
+namespace TastyEats
+{
+    public class BaseForm : Form
+    {
+        protected NavbarControl navbarControl1;
+        protected bool userIsActive = false; // Or use a static/global authentication status
+
+        public BaseForm()
+        {
+            // Initialize and add navbar
+            navbarControl1 = new NavbarControl();
+            navbarControl1.Dock = DockStyle.Top;
+            this.Controls.Add(navbarControl1);
+
+            // Subscribe to events once
+            navbarControl1.HomeClicked += (s, e) => NavigateTo(typeof(HomeForm));
+            navbarControl1.MenuClicked += (s, e) => NavigateTo(typeof(MenuForm));
+            navbarControl1.CartClicked += (s, e) => NavigateTo(typeof(CartForm));
+            navbarControl1.LoginClicked += NavbarControl_LoginClicked;
+
+            navbarControl1.IsLoggedIn = userIsActive;
+        }
+
+        // Method to navigate to a different form
+        protected virtual void NavigateTo(Type formType)
+        {
+
+            if (this.GetType() == formType)
+                return; // Don't reopen the current form
+
+            // Create the new form dynamically
+            Form form = (Form)Activator.CreateInstance(formType);
+            form.FormClosed += (s, e) => this.Close();
+            form.Show();
+            this.Hide(); // or this.Close(), depending on desired behavior
+        }
+
+        private void InitializeComponent()
+        {
+
+        }
+
+        protected virtual void NavbarControl_LoginClicked(object sender, EventArgs e)
+        {
+            if (!userIsActive)
+            {
+                NavigateTo(typeof(LoginForm));
+            }
+            else
+            {
+                var result = MessageBox.Show(
+                    "Are you sure you want to log out?",
+                    "Confirm Logout",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    userIsActive = false;
+                    navbarControl1.IsLoggedIn = false;
+                    NavigateTo(typeof(LoginForm));
+                }
+            }
+        }
+    }
+}

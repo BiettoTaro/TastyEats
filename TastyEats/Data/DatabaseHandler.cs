@@ -23,49 +23,38 @@ namespace TastyEats.Data
             return new NpgsqlConnection(connString);
         }
 
-        public static DataTable ExecuteQuery(string query)
+        public static DataTable ExecuteQuery(string query, Dictionary<string, object>? parameters = null)
         {
-            DataTable dt = new DataTable();
-            using (var connection = GetConnection())
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            using var cmd = new NpgsqlCommand(query, conn);
+            if (parameters != null)
             {
-                try
-                {
-                    using (var conn = GetConnection())
-                    {
-                        conn.Open();
-                        using (var cmd = new NpgsqlCommand(query, conn))
-                        using (var adapter = new NpgsqlDataAdapter(cmd))
-                        {
-                            adapter.Fill(dt);
-                        }
-                       
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error executing query: {ex.Message}");
-                }
-                return dt;
+                foreach (var pair in parameters)
+                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
             }
+
+            using var reader = cmd.ExecuteReader();
+            var dt = new DataTable();
+            dt.Load(reader);
+            return dt;
         }
-        public static int ExecuteNonQuery(string query)
+
+        public static int ExecuteNonQuery(string query, Dictionary<string, object>? parameters = null)
         {
-            try 
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            using var cmd = new NpgsqlCommand(query, conn);
+            if (parameters != null)
             {
-                using (var connection = GetConnection())
-                {
-                    connection.Open();
-                    using (var cmd = new NpgsqlCommand(query, connection))
-                    {
-                        return cmd.ExecuteNonQuery();
-                    }
-                }
+                foreach (var pair in parameters)
+                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error executing non-query: {ex.Message}");
-                throw;
-            }
+
+            return cmd.ExecuteNonQuery();
         }
+
     }
 }

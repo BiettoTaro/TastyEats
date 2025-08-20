@@ -9,42 +9,53 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="images\" />
+    <None Remove="images\cozze_gratinate.jpg" />
+    <None Remove="images\fregola.jpg" />
+    <None Remove="images\insalata_di_polpi.jpg" />
+    <None Remove="images\panna_cotta.jpg" />
+    <None Remove="images\porcetto.jpg" />
+    <None Remove="images\seadas.jpg" />
+    <None Remove="images\tagliere_salumi.jpg" />
+    <None Remove="images\tiramisu.jpg" />
+    <None Remove="images\zuppa_gallurese.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="images\cozze_gratinate.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\fregola.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\insalata_di_polpi.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\panna_cotta.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\porcetto.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\seadas.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\tagliere_salumi.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\tiramisu.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\zuppa_gallurese.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Utilities\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="9.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="images\cozze_gratinate.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\fregola.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\insalata_di_polpi.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\panna_cotta.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\porcetto.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\seadas.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\tagliere_salumi.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\tiramisu.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="images\zuppa_gallurese.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

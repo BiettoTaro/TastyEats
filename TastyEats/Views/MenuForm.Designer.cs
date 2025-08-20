@@ -29,59 +29,55 @@
         private void InitializeComponent()
         {
             menuFlowPanel = new FlowLayoutPanel();
-            topBarPanel = new Panel();
-            btnCart = new Button();
-            topBarPanel.SuspendLayout();
+            tableLayoutPanel1 = new TableLayoutPanel();
             SuspendLayout();
+            // 
+            // navbarControl1
+            // 
+            navbarControl1.Size = new Size(624, 40);
             // 
             // menuFlowPanel
             // 
             menuFlowPanel.AutoScroll = true;
             menuFlowPanel.Dock = DockStyle.Fill;
-            menuFlowPanel.Location = new Point(0, 40);
-            menuFlowPanel.Name = "menuFlowPanel";
-            menuFlowPanel.Size = new Size(624, 521);
-            menuFlowPanel.TabIndex = 0;
+            //menuFlowPanel.Location = new Point(0, 0);
+            //menuFlowPanel.Name = "menuFlowPanel";
+            //menuFlowPanel.Padding = new Padding(0, 40, 0, 0);
+            //menuFlowPanel.Size = new Size(624, 605);
+            //menuFlowPanel.TabIndex = 0;
             // 
-            // topBarPanel
+            // tableLayoutPanel1
             // 
-            topBarPanel.BackColor = Color.White;
-            topBarPanel.Controls.Add(btnCart);
-            topBarPanel.Dock = DockStyle.Top;
-            topBarPanel.Location = new Point(0, 0);
-            topBarPanel.Name = "topBarPanel";
-            topBarPanel.Size = new Size(624, 40);
-            topBarPanel.TabIndex = 1;
-            // 
-            // btnCart
-            // 
-            btnCart.Dock = DockStyle.Right;
-            btnCart.Location = new Point(544, 0);
-            btnCart.Margin = new Padding(0, 5, 10, 5);
-            btnCart.Name = "btnCart";
-            btnCart.Size = new Size(80, 40);
-            btnCart.TabIndex = 0;
-            btnCart.Text = "\U0001f6d2 Cart";
-            btnCart.Click += btnCart_Click;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 40);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(624, 565);
+            tableLayoutPanel1.TabIndex = 1;
+            tableLayoutPanel1.Controls.Add(menuFlowPanel, 0, 1);
             // 
             // MenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(624, 561);
-            Controls.Add(menuFlowPanel);
-            Controls.Add(topBarPanel);
+            ClientSize = new Size(624, 605);
+            Controls.Add(tableLayoutPanel1);
+            
             Name = "MenuForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MenuForm";
-            topBarPanel.ResumeLayout(false);
+            
+         
             ResumeLayout(false);
         }
 
         #endregion
 
         private FlowLayoutPanel menuFlowPanel;
-        private Panel topBarPanel;
-        private Button btnCart;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

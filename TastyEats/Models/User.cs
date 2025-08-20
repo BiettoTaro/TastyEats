@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace TastyEats.Models
 {
-    internal class User
+    public abstract class User
     {
+        public int Id { get; set; }
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string PasswordHash { get; set; } = "";
     }
 }
+

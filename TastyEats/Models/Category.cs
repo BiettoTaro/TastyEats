@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace TastyEats.Models
 {
-    public class Admin : User
+    public class Category
     {
-        
-  
-        public bool IsActive { get; set; } = true;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }
-

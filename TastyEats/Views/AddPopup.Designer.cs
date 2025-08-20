@@ -133,7 +133,7 @@
             Controls.Add(totalLabel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "AddPopup";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AddPopup";
             ((System.ComponentModel.ISupportInitialize)dishImage).EndInit();
             ((System.ComponentModel.ISupportInitialize)quantitySelector).EndInit();

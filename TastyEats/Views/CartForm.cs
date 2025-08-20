@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace TastyEats.Views
 {
-    public partial class CartForm : Form
+    public partial class CartForm : BaseForm
     {
         public CartForm()
         {
@@ -22,6 +22,28 @@ namespace TastyEats.Views
         {
             cartPanel.SuspendLayout();
             cartPanel.Controls.Clear();
+
+            var items = Controllers.CartController.GetItems();
+
+            if (items == null || items.Count == 0)
+            {
+                // Show empty-cart message
+                var lblEmpty = new Label
+                {
+                    Text = "Your cart is empty",
+                    AutoSize = true,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    ForeColor = Color.Gray,
+                    Font = new Font("Verdana", 12F, FontStyle.Italic),
+                    Margin = new Padding((cartPanel.ClientSize.Width - 150) / 2, 20, 0, 0)
+                };
+                cartPanel.Controls.Add(lblEmpty);
+
+                // Reset total
+                totalLabel.Text = "Total: £0.00";
+                cartPanel.ResumeLayout();
+                return;
+            }
 
             foreach (var item in Controllers.CartController.GetItems())
             {
@@ -129,13 +151,41 @@ namespace TastyEats.Views
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            // Placeholder: call PlaceOrder()
+            var user = Controllers.AuthController.CurrentUser;
+
+            // If no user is logged in, prompt to log in or register
+            if (user == null || !(user is Models.Customer c && !c.IsActive))
+            {
+                using (var loginForm = new LoginForm())
+                {
+                    this.Hide(); // Hide the cart form while login is open
+                    var result = loginForm.ShowDialog();
+                    if (result != DialogResult.OK || Controllers.AuthController.CurrentUser == null)
+                    {
+                        MessageBox.Show("You must be logged in to checkout.", "Login Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    this.Show(); // Show the cart form again after login
+                }
+            }
+
+            this.Hide(); // Hide the cart form while checkout is open
+            // Proceed with checkout
+            var checkoutForm = new Views.CheckoutForm();
+            checkoutForm.ShowDialog();
+
+            this.Show(); // Show the cart form again after checkout
         }
 
         private void btnClearCart_Click(object sender, EventArgs e)
         {
             Controllers.CartController.ClearCart();
             LoadCartItems();
+        }
+
+        private void CartForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

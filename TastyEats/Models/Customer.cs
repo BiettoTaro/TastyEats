@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace TastyEats.Models
 {
-    internal class Customer
+    public class Customer : User
     {
+        
+        public string? PhoneNumber { get; set; }
+        public string? Address { get; set; }
+        public bool IsActive { get; set; } = true;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
+
