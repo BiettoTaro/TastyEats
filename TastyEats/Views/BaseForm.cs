@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using TastyEats.Controllers;
 using TastyEats.Views;
 
 namespace TastyEats
@@ -7,7 +8,8 @@ namespace TastyEats
     public class BaseForm : Form
     {
         protected NavbarControl navbarControl1;
-        protected bool userIsActive = false; // Or use a static/global authentication status
+        protected bool userIsActive = false; 
+
 
         public BaseForm()
         {
@@ -16,13 +18,25 @@ namespace TastyEats
             navbarControl1.Dock = DockStyle.Top;
             this.Controls.Add(navbarControl1);
 
-            // Subscribe to events once
+            
             navbarControl1.HomeClicked += (s, e) => NavigateTo(typeof(HomeForm));
             navbarControl1.MenuClicked += (s, e) => NavigateTo(typeof(MenuForm));
             navbarControl1.CartClicked += (s, e) => NavigateTo(typeof(CartForm));
             navbarControl1.LoginClicked += NavbarControl_LoginClicked;
+        }
 
-            navbarControl1.IsLoggedIn = userIsActive;
+        public void SetLoginStatus(bool isLoggedIn)
+        {
+            userIsActive = isLoggedIn;
+            navbarControl1.IsLoggedIn = isLoggedIn;
+        }
+
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            userIsActive = AuthController.IsLoggedIn; // Check if user is logged in
+            navbarControl1.IsLoggedIn = userIsActive; // Update navbar state
         }
 
         // Method to navigate to a different form
@@ -48,7 +62,9 @@ namespace TastyEats
         {
             if (!userIsActive)
             {
-                NavigateTo(typeof(LoginForm));
+                var loginForm = new LoginForm(this);
+                loginForm.Show();
+                this.Hide(); // Hide the current form while login is open
             }
             else
             {

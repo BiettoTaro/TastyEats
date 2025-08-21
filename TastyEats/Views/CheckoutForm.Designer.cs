@@ -44,8 +44,8 @@
             cardNumberBox = new TextBox();
             expLbl = new Label();
             expDtp = new DateTimePicker();
-            textBox1 = new TextBox();
-            button1 = new Button();
+            cvvBox = new TextBox();
+            orderBtn = new Button();
             backBtn = new Button();
             errorProvider1 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
@@ -76,6 +76,7 @@
             nameBox.Location = new Point(15, 121);
             nameBox.Name = "nameBox";
             nameBox.Size = new Size(187, 33);
+            nameBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nameBox.TabIndex = 2;
             // 
             // addressLbl
@@ -103,6 +104,7 @@
             emailBox.Location = new Point(15, 218);
             emailBox.Name = "emailBox";
             emailBox.Size = new Size(187, 33);
+            emailBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             emailBox.TabIndex = 5;
             // 
             // addressBox
@@ -111,6 +113,7 @@
             addressBox.Name = "addressBox";
             addressBox.Size = new Size(187, 96);
             addressBox.TabIndex = 6;
+            addressBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             addressBox.Text = "";
             // 
             // label1
@@ -150,6 +153,7 @@
             // 
             cardNameBox.Location = new Point(346, 121);
             cardNameBox.Name = "cardNameBox";
+            cardNameBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cardNameBox.Size = new Size(187, 33);
             cardNameBox.TabIndex = 10;
             // 
@@ -167,6 +171,7 @@
             // 
             cardNumberBox.Location = new Point(346, 218);
             cardNumberBox.Name = "cardNumberBox";
+            cardNumberBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cardNumberBox.Size = new Size(187, 33);
             cardNumberBox.TabIndex = 12;
             // 
@@ -195,23 +200,24 @@
             expDtp.TabIndex = 14;
             expDtp.Value = new DateTime(2025, 8, 17, 0, 0, 0, 0);
             // 
-            // textBox1
+            // cvvBox
             // 
-            textBox1.Location = new Point(476, 310);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(57, 33);
-            textBox1.TabIndex = 15;
+            cvvBox.Location = new Point(476, 310);
+            cvvBox.Name = "cvvBox";
+            cvvBox.Size = new Size(57, 33);
+            cvvBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cvvBox.TabIndex = 15;
             // 
-            // button1
+            // orderBtn
             // 
-            button1.Font = new Font("Verdana", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(346, 467);
-            button1.Name = "button1";
-            button1.Size = new Size(187, 34);
-            button1.TabIndex = 16;
-            button1.Text = "ORDER";
-            button1.UseVisualStyleBackColor = true;
-            
+            orderBtn.Font = new Font("Verdana", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            orderBtn.Location = new Point(346, 467);
+            orderBtn.Name = "orderBtn";
+            orderBtn.Size = new Size(187, 34);
+            orderBtn.TabIndex = 16;
+            orderBtn.Text = "ORDER";
+            orderBtn.UseVisualStyleBackColor = true;
+            orderBtn.Click += orderBtn_Click;
             // 
             // backBtn
             // 
@@ -233,8 +239,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(604, 512);
             Controls.Add(backBtn);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
+            Controls.Add(orderBtn);
+            Controls.Add(cvvBox);
             Controls.Add(expDtp);
             Controls.Add(expLbl);
             Controls.Add(cardNumberBox);
@@ -278,8 +284,8 @@
         private TextBox cardNumberBox;
         private Label expLbl;
         private DateTimePicker expDtp;
-        private TextBox textBox1;
-        private Button button1;
+        private TextBox cvvBox;
+        private Button orderBtn;
         private Button backBtn;
         private ErrorProvider errorProvider1;
         

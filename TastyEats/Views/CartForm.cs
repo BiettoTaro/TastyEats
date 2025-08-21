@@ -151,31 +151,29 @@ namespace TastyEats.Views
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            var user = Controllers.AuthController.CurrentUser;
-
             // If no user is logged in, prompt to log in or register
-            if (user == null || !(user is Models.Customer c && !c.IsActive))
+            if (!Controllers.AuthController.IsLoggedIn)
             {
-                using (var loginForm = new LoginForm())
+                var loginForm = new LoginForm(this);
+                this.Hide(); // Hide the cart form while login is open
+                var result = loginForm.ShowDialog();
+                if (!Controllers.AuthController.IsLoggedIn)
                 {
-                    this.Hide(); // Hide the cart form while login is open
-                    var result = loginForm.ShowDialog();
-                    if (result != DialogResult.OK || Controllers.AuthController.CurrentUser == null)
-                    {
-                        MessageBox.Show("You must be logged in to checkout.", "Login Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    this.Show(); // Show the cart form again after login
+                    MessageBox.Show("You must be logged in to checkout.", "Login Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Show(); // Show the cart form again if not logged in
+                    return;
                 }
+                // Otherwise, proceed as logged in
+                this.Show();
             }
 
             this.Hide(); // Hide the cart form while checkout is open
-            // Proceed with checkout
             var checkoutForm = new Views.CheckoutForm();
             checkoutForm.ShowDialog();
-
             this.Show(); // Show the cart form again after checkout
+            LoadCartItems(); // Refresh cart items after checkout
         }
+
 
         private void btnClearCart_Click(object sender, EventArgs e)
         {

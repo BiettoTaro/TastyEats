@@ -13,10 +13,13 @@ namespace TastyEats.Views
 {
     public partial class LoginForm : Form
     {
-        public LoginForm()
+        private Form _returnToForm;
+        public LoginForm(Form returnToForm = null)
         {
             InitializeComponent();
+            _returnToForm = returnToForm;
         }
+        public LoginForm() : this(null) { }
 
         private void passwordBox_TextChanged(object sender, EventArgs e)
         {
@@ -36,20 +39,24 @@ namespace TastyEats.Views
                 var user = AuthController.CurrentUser;
                 this.Hide();
 
-                if (user is TastyEats.Models.Customer)
+                if (_returnToForm is BaseForm baseForm)
                 {
-                    // Open the cart or customer main area
-                    var checkoutForm = new CheckoutForm();  // Replace with your actual form
+                    baseForm.SetLoginStatus(true);
+                    
+                    baseForm.Show();
+                }
+                else if (user is TastyEats.Models.Customer)
+                {
+                    var checkoutForm = new CheckoutForm();
                     checkoutForm.ShowDialog();
                 }
                 else if (user is TastyEats.Models.Admin)
                 {
-                    // Open the admin dashboard
-                    var adminForm = new AdminForm(); // Replace with your actual admin form
+                    var adminForm = new AdminForm();
                     adminForm.ShowDialog();
                 }
 
-                this.Close(); // After user closes CartForm/AdminForm, close LoginForm
+                this.Close();
             }
             else
             {
@@ -58,6 +65,7 @@ namespace TastyEats.Views
                 passwordBox.Focus();
             }
         }
+
 
         private void signUpLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
