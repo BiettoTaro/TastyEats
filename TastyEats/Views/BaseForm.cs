@@ -37,6 +37,16 @@ namespace TastyEats
             base.OnShown(e);
             userIsActive = AuthController.IsLoggedIn; // Check if user is logged in
             navbarControl1.IsLoggedIn = userIsActive; // Update navbar state
+           
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            navbarControl1.SetAccountLink(AuthController.IsLoggedIn && AuthController.CurrentUser != null
+                ? AuthController.CurrentUser.Name
+                : null
+                );
         }
 
         // Method to navigate to a different form
@@ -76,9 +86,10 @@ namespace TastyEats
 
                 if (result == DialogResult.Yes)
                 {
+                    AuthController.Logout(); // Call the logout method from AuthController
                     userIsActive = false;
                     navbarControl1.IsLoggedIn = false;
-                    NavigateTo(typeof(LoginForm));
+                    NavigateTo(typeof(HomeForm));
                 }
             }
         }

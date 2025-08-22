@@ -48,6 +48,8 @@
             orderBtn = new Button();
             backBtn = new Button();
             errorProvider1 = new ErrorProvider(components);
+            phoneLbl = new Label();
+            phoneBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -73,17 +75,17 @@
             // 
             // nameBox
             // 
+            nameBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nameBox.Location = new Point(15, 121);
             nameBox.Name = "nameBox";
-            nameBox.Size = new Size(187, 33);
-            nameBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            nameBox.Size = new Size(187, 23);
             nameBox.TabIndex = 2;
             // 
             // addressLbl
             // 
             addressLbl.AutoSize = true;
             addressLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            addressLbl.Location = new Point(15, 285);
+            addressLbl.Location = new Point(15, 297);
             addressLbl.Name = "addressLbl";
             addressLbl.Size = new Size(65, 16);
             addressLbl.TabIndex = 3;
@@ -93,7 +95,7 @@
             // 
             emailLbl.AutoSize = true;
             emailLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            emailLbl.Location = new Point(15, 183);
+            emailLbl.Location = new Point(15, 156);
             emailLbl.Name = "emailLbl";
             emailLbl.Size = new Size(47, 16);
             emailLbl.TabIndex = 4;
@@ -101,19 +103,19 @@
             // 
             // emailBox
             // 
-            emailBox.Location = new Point(15, 218);
-            emailBox.Name = "emailBox";
-            emailBox.Size = new Size(187, 33);
             emailBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            emailBox.Location = new Point(15, 191);
+            emailBox.Name = "emailBox";
+            emailBox.Size = new Size(187, 23);
             emailBox.TabIndex = 5;
             // 
             // addressBox
             // 
-            addressBox.Location = new Point(15, 316);
+            addressBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            addressBox.Location = new Point(15, 329);
             addressBox.Name = "addressBox";
             addressBox.Size = new Size(187, 96);
             addressBox.TabIndex = 6;
-            addressBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             addressBox.Text = "";
             // 
             // label1
@@ -122,9 +124,9 @@
             label1.Location = new Point(346, 32);
             label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(187, 25);
+            label1.Size = new Size(204, 25);
             label1.TabIndex = 7;
-            label1.Text = "Billing Address";
+            label1.Text = "Payment Details";
             // 
             // radioButton1
             // 
@@ -151,10 +153,10 @@
             // 
             // cardNameBox
             // 
+            cardNameBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cardNameBox.Location = new Point(346, 121);
             cardNameBox.Name = "cardNameBox";
-            cardNameBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cardNameBox.Size = new Size(187, 33);
+            cardNameBox.Size = new Size(187, 23);
             cardNameBox.TabIndex = 10;
             // 
             // cardNumberLbl
@@ -169,10 +171,10 @@
             // 
             // cardNumberBox
             // 
+            cardNumberBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cardNumberBox.Location = new Point(346, 218);
             cardNumberBox.Name = "cardNumberBox";
-            cardNumberBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cardNumberBox.Size = new Size(187, 33);
+            cardNumberBox.Size = new Size(187, 23);
             cardNumberBox.TabIndex = 12;
             // 
             // expLbl
@@ -202,10 +204,10 @@
             // 
             // cvvBox
             // 
+            cvvBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cvvBox.Location = new Point(476, 310);
             cvvBox.Name = "cvvBox";
-            cvvBox.Size = new Size(57, 33);
-            cvvBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cvvBox.Size = new Size(57, 23);
             cvvBox.TabIndex = 15;
             // 
             // orderBtn
@@ -233,11 +235,31 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
+            // phoneLbl
+            // 
+            phoneLbl.AutoSize = true;
+            phoneLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            phoneLbl.Location = new Point(15, 225);
+            phoneLbl.Name = "phoneLbl";
+            phoneLbl.Size = new Size(75, 16);
+            phoneLbl.TabIndex = 18;
+            phoneLbl.Text = "Phone No";
+            // 
+            // phoneBox
+            // 
+            phoneBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            phoneBox.Location = new Point(15, 260);
+            phoneBox.Name = "phoneBox";
+            phoneBox.Size = new Size(187, 23);
+            phoneBox.TabIndex = 19;
+            // 
             // CheckoutForm
             // 
             AutoScaleDimensions = new SizeF(15F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(604, 512);
+            Controls.Add(phoneBox);
+            Controls.Add(phoneLbl);
             Controls.Add(backBtn);
             Controls.Add(orderBtn);
             Controls.Add(cvvBox);
@@ -288,6 +310,7 @@
         private Button orderBtn;
         private Button backBtn;
         private ErrorProvider errorProvider1;
-        
+        private TextBox phoneBox;
+        private Label phoneLbl;
     }
 }

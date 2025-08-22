@@ -33,6 +33,7 @@
             homeLink = new LinkLabel();
             cartLink = new LinkLabel();
             logLink = new LinkLabel();
+            accountLink = new LinkLabel();
             SuspendLayout();
             // 
             // label1
@@ -49,7 +50,7 @@
             // 
             menuLink.AutoSize = true;
             menuLink.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            menuLink.Location = new Point(381, 13);
+            menuLink.Location = new Point(422, 13);
             menuLink.Name = "menuLink";
             menuLink.Size = new Size(41, 14);
             menuLink.TabIndex = 1;
@@ -61,7 +62,7 @@
             // 
             homeLink.AutoSize = true;
             homeLink.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            homeLink.Location = new Point(307, 13);
+            homeLink.Location = new Point(373, 13);
             homeLink.Name = "homeLink";
             homeLink.Size = new Size(43, 14);
             homeLink.TabIndex = 2;
@@ -73,7 +74,7 @@
             // 
             cartLink.AutoSize = true;
             cartLink.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cartLink.Location = new Point(443, 13);
+            cartLink.Location = new Point(469, 13);
             cartLink.Name = "cartLink";
             cartLink.Size = new Size(52, 14);
             cartLink.TabIndex = 3;
@@ -93,10 +94,24 @@
             logLink.Text = "Login/out";
             logLink.LinkClicked += logLink_LinkClicked;
             // 
+            // accountLink
+            // 
+            accountLink.AutoSize = true;
+            accountLink.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            accountLink.Location = new Point(154, 13);
+            accountLink.Name = "accountLink";
+            accountLink.Size = new Size(56, 14);
+            accountLink.TabIndex = 5;
+            accountLink.TabStop = true;
+            accountLink.Text = "Account";
+            accountLink.LinkClicked += accountLink_LinkClicked;
+            // 
             // NavbarControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Info;
+            Controls.Add(accountLink);
             Controls.Add(logLink);
             Controls.Add(cartLink);
             Controls.Add(homeLink);
@@ -116,5 +131,6 @@
         private LinkLabel homeLink;
         private LinkLabel cartLink;
         private LinkLabel logLink;
+        private LinkLabel accountLink;
     }
 }

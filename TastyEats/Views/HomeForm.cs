@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TastyEats.Controllers;
 
 namespace TastyEats.Views
 {
@@ -15,6 +16,22 @@ namespace TastyEats.Views
         public HomeForm()
         {
             InitializeComponent();
+        }
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            if (AuthController.IsLoggedIn && AuthController.CurrentUser != null)
+                welcomeLbl.Text = $"Welcome, {AuthController.CurrentUser.Name}!";
+            else
+                welcomeLbl.Text = "Welcome";
+        }
+
+        
+
+        private void homeBtn_Click(object sender, EventArgs e)
+        {
+            NavigateTo(typeof(MenuForm));
         }
     }
 }

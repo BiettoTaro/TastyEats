@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TastyEats.Controllers;
 using TastyEats.Models;
-
+using TastyEats.Helpers;
 
 namespace TastyEats.Views
 {
@@ -26,10 +26,8 @@ namespace TastyEats.Views
 
         private void CheckoutForm_Load(object sender, EventArgs e)
         {
-            nameBox.Text = user?.Name ?? string.Empty;
-            emailBox.Text = user?.Email ?? string.Empty;
-            addressBox.Text = user is Customer customer ? customer.Address : string.Empty;
-            cardNameBox.Text = user?.Name ?? string.Empty;
+            var customer = user as Customer;
+            FormFiller.FillCustomerFields(customer, nameBox, emailBox, phoneBox, addressBox);
         }
 
         private void backBtn_Click(object sender, EventArgs e)

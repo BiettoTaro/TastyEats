@@ -1,4 +1,5 @@
 using TastyEats.Data;
+using TastyEats.Views;
 
 namespace TastyEats
 {
@@ -15,7 +16,7 @@ namespace TastyEats
             DatabaseSeeder.Seed();
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new MenuForm());
+            Application.Run(new HomeForm());
         }
     }
 }

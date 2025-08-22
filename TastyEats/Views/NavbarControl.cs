@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace TastyEats.Views
 {
@@ -19,6 +20,7 @@ namespace TastyEats.Views
         public NavbarControl()
         {
             InitializeComponent();
+            this.BackColor = System.Drawing.SystemColors.Info;
         }
 
         private void homeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -41,7 +43,23 @@ namespace TastyEats.Views
             LoginClicked?.Invoke(this, EventArgs.Empty);
         }
 
-       
+        public void SetAccountLink(string? username)
+        {
+            if (!string.IsNullOrEmpty(username))
+            {
+                accountLink.Text = $"🧑 {username}";
+                accountLink.Visible = true;
+            }
+            else
+            {
+                accountLink.Visible = false;
+            }
+        }
+        private void accountLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var form = new ManageAccountForm();
+            form.ShowDialog();
+        }
 
         public bool IsLoggedIn
         {
