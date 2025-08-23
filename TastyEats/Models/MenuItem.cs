@@ -12,7 +12,7 @@ namespace TastyEats.Models
         public string Name { get; set; } = "";
         public string Description { get; set; } = "";
         public decimal Price { get; set; }
-        public string Image { get; set; } = ""; // this is the important one
+        public string Image { get; set; } = ""; 
         public int CategoryId { get; set; }
         public int AdminId { get; set; }
         public bool IsAvailable { get; set; }

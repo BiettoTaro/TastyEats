@@ -16,7 +16,7 @@ namespace TastyEats
             DatabaseSeeder.Seed();
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new HomeForm());
+            Application.Run(new AdminForm());
         }
     }
 }

@@ -109,6 +109,18 @@ namespace TastyEats.Controllers
             (User?)GetCustomerByEmail(email) ?? GetAdminByEmail(email);
 
         //  CRUD: Customers
+
+        public static List<Customer> GetAllCustomers()
+        {
+            var dt = Query("SELECT customer_id, name, email, password_hash, phone, address, is_active, created_at FROM customers", 
+                new Dictionary<string, object>());
+            var customers = new List<Customer>();
+            foreach (DataRow row in dt.Rows)
+            {
+                customers.Add(MapCustomer(row));
+            }
+            return customers;
+        }
         public static bool CreateCustomer(Customer c, string plainPassword)
         {
             const string sql = @"
@@ -153,6 +165,18 @@ namespace TastyEats.Controllers
         }
 
         //  CRUD: Admins 
+
+        public static List<Admin> GetAllAdmins()
+        {
+            var dt = Query("SELECT admin_id, name, email, password_hash, is_active, created_at FROM admins", 
+                new Dictionary<string, object>());
+            var admins = new List<Admin>();
+            foreach (DataRow row in dt.Rows)
+            {
+                admins.Add(MapAdmin(row));
+            }
+            return admins;
+        }
         public static bool CreateAdmin(Admin a, string plainPassword)
         {
             const string sql = @"
