@@ -77,28 +77,12 @@ namespace TastyEats.Views
 
             if (isCardPayment)
             {
-                // Validate card fields
-                if (string.IsNullOrWhiteSpace(cardNameBox.Text) ||
-                    string.IsNullOrWhiteSpace(cardNumberBox.Text) ||
-                    string.IsNullOrWhiteSpace(cvvBox.Text) ||
-                    expDtp.Value < DateTime.Now)
-                {
-                    MessageBox.Show("Please fill in all card details.", "Incomplete Payment Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                string? cardError = ValidationHelper.ValidateCardDetails(
+                    cardNameBox.Text, cardNumberBox.Text, cvvBox.Text, expDtp.Value);
 
-                // Validate card number format
-                var cardPattern = @"^(?:\d{4}[- ]?){3}\d{4}$";
-                if (!Regex.IsMatch(cardNumberBox.Text, cardPattern))
+                if (cardError != null)
                 {
-                    MessageBox.Show("Card number format is invalid.", "Invalid Card Number", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Validate CVV (3 or 4 digits)
-                if (!Regex.IsMatch(cvvBox.Text, @"^\d{3,4}$"))
-                {
-                    MessageBox.Show("CVV must be 3 or 4 digits.", "Invalid CVV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(cardError, "Invalid Card Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -142,6 +126,7 @@ namespace TastyEats.Views
                 // Cart is NOT cleared if order fails
             }
         }
+
 
     }
 }

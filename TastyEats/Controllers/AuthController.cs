@@ -131,7 +131,7 @@ namespace TastyEats.Controllers
         {
             const string sql = @"
                 UPDATE customers
-                   SET name=@name, email=@email, phone=@phone, address=@address, is_active=@active
+                   SET name=@name, email=@email, phone=@phone, address=@address, password_hash=@hash, is_active=@active
                  WHERE customer_id=@id";
             var p = new Dictionary<string, object>
             {
@@ -140,6 +140,7 @@ namespace TastyEats.Controllers
                 ["@email"] = c.Email,
                 ["@phone"] = c.PhoneNumber ?? (object)DBNull.Value,
                 ["@address"] = c.Address ?? (object)DBNull.Value,
+                ["@hash"] = c.PasswordHash,
                 ["@active"] = c.IsActive
             };
             return NonQuery(sql, p) > 0;
@@ -180,6 +181,7 @@ namespace TastyEats.Controllers
                 ["@name"] = a.Name,
                 ["@email"] = a.Email,
                 ["@active"] = a.IsActive
+                
             };
             return NonQuery(sql, p) > 0;
         }

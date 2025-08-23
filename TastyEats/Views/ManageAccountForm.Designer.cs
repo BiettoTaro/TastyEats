@@ -61,6 +61,7 @@
             deleteBtn.TabIndex = 35;
             deleteBtn.Text = "DELETE ACCOUNT";
             deleteBtn.UseVisualStyleBackColor = false;
+            deleteBtn.Click += deleteBtn_Click;
             // 
             // updateBtn
             // 
@@ -82,6 +83,7 @@
             newPassBox.Name = "newPassBox";
             newPassBox.Size = new Size(187, 23);
             newPassBox.TabIndex = 28;
+            newPassBox.UseSystemPasswordChar = true;
             // 
             // addressBox
             // 
@@ -183,6 +185,7 @@
             confPassBox.Name = "confPassBox";
             confPassBox.Size = new Size(187, 23);
             confPassBox.TabIndex = 39;
+            confPassBox.UseSystemPasswordChar = true;
             // 
             // oldPassLbl
             // 
@@ -201,6 +204,7 @@
             oldPassBox.Name = "oldPassBox";
             oldPassBox.Size = new Size(187, 23);
             oldPassBox.TabIndex = 41;
+            oldPassBox.UseSystemPasswordChar = true;
             // 
             // ManageAccountForm
             // 
@@ -224,6 +228,7 @@
             Controls.Add(nameBox);
             Controls.Add(fullNameLbl);
             Name = "ManageAccountForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ManageAccountForm";
             Load += ManageAccountForm_Load;
             Controls.SetChildIndex(navbarControl1, 0);

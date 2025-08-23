@@ -89,7 +89,10 @@ namespace TastyEats
                     AuthController.Logout(); // Call the logout method from AuthController
                     userIsActive = false;
                     navbarControl1.IsLoggedIn = false;
-                    NavigateTo(typeof(HomeForm));
+
+                    // Restart the application to reset state
+                    Application.Restart();
+
                 }
             }
         }

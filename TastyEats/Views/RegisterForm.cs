@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TastyEats.Controllers;
 using TastyEats.Models;
-using System.Text.RegularExpressions;
+using TastyEats.Helpers;
 
 namespace TastyEats.Views
 {
@@ -22,7 +22,6 @@ namespace TastyEats.Views
 
         private void registerBtn_Click(object sender, EventArgs e)
         {
-          
             string email = emailBox.Text.Trim();
             string name = nameBox.Text.Trim();
             string phone = phoneBox.Text.Trim();
@@ -30,39 +29,15 @@ namespace TastyEats.Views
             string password = passwordBox.Text;
             string confirmPassword = confirmPasswordBox.Text;
 
-            // Validate email format
-            var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-            if (!emailRegex.IsMatch(email))
+            // Use the helper to validate all input at once
+            string? error = ValidationHelper.ValidateRegistration(email, name, phone, address, password, confirmPassword);
+            if (error != null)
             {
-                MessageBox.Show("Please enter a valid email address.", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                emailBox.Focus();
+                MessageBox.Show(error, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validate password strength (8 char min 1 symbol)
-            var passwordRegex = new Regex(@"^(?=.*\W).{8,}$");
-            if (password != confirmPassword)
-            {
-                MessageBox.Show("Passwords do not match. Please try again.", "Password Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                confirmPasswordBox.Clear();
-                confirmPasswordBox.Focus();
-                return;
-            }
-            else if (!passwordRegex.IsMatch(password))
-            {
-                MessageBox.Show("Password must be at least 8 characters long and contain at least one special character.", "Weak Password", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                passwordBox.Clear();
-                confirmPasswordBox.Clear();
-                passwordBox.Focus();
-                return;
-            }
-            else if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(address))
-            {
-                MessageBox.Show("Please fill in all fields.", "Incomplete Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // In your registerBtn_Click handler, before CreateCustomer:
+            // Check for duplicate email
             if (AuthController.GetCustomerByEmail(email) != null)
             {
                 MessageBox.Show("That email is already registered. Please use a different one.",
@@ -71,7 +46,6 @@ namespace TastyEats.Views
                 return;
             }
 
-
             // Create a new customer object
             var newCustomer = new Customer
             {
@@ -79,15 +53,22 @@ namespace TastyEats.Views
                 Name = name,
                 PhoneNumber = phone,
                 Address = address,
-                PasswordHash = password,
+                PasswordHash = password, // Will be hashed in AuthController
                 IsActive = false, // New users are inactive until verified
                 CreatedAt = DateTime.UtcNow
             };
 
             bool created = AuthController.CreateCustomer(newCustomer, password);
-            MessageBox.Show("Account Registered!");
-            this.Close();
-
+            if (created)
+            {
+                MessageBox.Show("Account Registered!");
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Registration failed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
     }
 }
