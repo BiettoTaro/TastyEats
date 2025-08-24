@@ -11,6 +11,9 @@ namespace TastyEats.Views
     {
         // Simulate logged-in admin. Replace with actual admin ID in a real app.
         private int CurrentAdminId => 1;
+        private Dictionary<int, string> idToName;
+        private Dictionary<int, (string Name, string Address)> customerLookup;
+
 
         public AdminForm()
         {
@@ -20,9 +23,32 @@ namespace TastyEats.Views
 
         private void AdminForm_Load(object sender, EventArgs e)
         {
-            loadMenuItems();
+            idToName = MenuItemController.GetAllMenuItems().ToDictionary(item => item.Id, item => item.Name);
+            customerLookup = AuthController.GetAllCustomers().ToDictionary(c => c.Id, c => (c.Name, c.Address));
+
+
+            if (adminTab.SelectedTab == menuTab)
+                loadMenuItems();
+            else if (adminTab.SelectedTab == ordersTab)
+                loadOrders();
+            else if (adminTab.SelectedTab == customersTab)
+                LoadCustomers();
+            else if (adminTab.SelectedTab == adminsTab)
+                LoadAdmins();
+        }
+        private void adminTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (adminTab.SelectedTab == menuTab)
+                loadMenuItems();
+            else if (adminTab.SelectedTab == ordersTab)
+                loadOrders();
+            else if (adminTab.SelectedTab == customersTab)
+                LoadCustomers();
+            else if (adminTab.SelectedTab == adminsTab)
+                LoadAdmins();
         }
 
+        // Menu Tab Section
         private void SetupCategoryColumn()
         {
             // Remove if already present
@@ -120,11 +146,6 @@ namespace TastyEats.Views
             }
         }
 
-        // Optional: Manual refresh button event
-        private void refreshBtn_Click(object sender, EventArgs e)
-        {
-            loadMenuItems();
-        }
 
         private void addMenuBtn_Click(object sender, EventArgs e)
         {
@@ -226,5 +247,305 @@ namespace TastyEats.Views
             }
         }
 
+        // Orders Tab Section
+
+        private void loadOrders()
+        {
+            SetupOrdersGrid();
+            var orders = OrderController.GetAllOrders();
+
+            foreach (var order in orders)
+            {
+                if (customerLookup.TryGetValue(order.CustomerId, out var info))
+                {
+                    order.CustomerName = info.Name;
+                    order.CustomerAddress = info.Address;
+                }
+                else
+                {
+                    order.CustomerName = "(Unknown)";
+                    order.CustomerAddress = "(Unknown)";
+                }
+            }
+            ordersGridView.DataSource = new BindingList<Order>(orders);
+
+            ordersGridView.DataSource = orders;
+        }
+
+        private void ordersGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (ordersGridView.Columns[e.ColumnIndex].Name == "Status")
+            {
+                var row = ordersGridView.Rows[e.RowIndex];
+                var order = row.DataBoundItem as Order;
+                if (order != null)
+                {
+                    OrderController.UpdateOrderStatus(order.OrderId, order.Status);
+                    // Optional: MessageBox.Show("Order status updated!");
+                }
+            }
+        }
+
+        private void SetupOrdersGrid()
+        {
+            ordersGridView.AutoGenerateColumns = false;
+            ordersGridView.AllowUserToAddRows = false;
+            ordersGridView.AllowUserToDeleteRows = false; // Orders can't be deleted by default
+
+            // Columns (add only if not already present)
+            if (ordersGridView.Columns.Count == 0)
+            {
+                ordersGridView.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "CustomerName",
+                    Name = "CustomerName",
+                    HeaderText = "Customer Name",
+                    ReadOnly = true,
+                    Visible = true
+                });
+                ordersGridView.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "CustomerAddress",
+                    Name = "CustomerAddress",
+                    HeaderText = "Customer Address",
+                    ReadOnly = true  // or visible=false if you don't want to show it
+                });
+                ordersGridView.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "OrderDate",
+                    Name = "OrderDate",
+                    HeaderText = "Date",
+                    ReadOnly = true
+                });
+                ordersGridView.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "TotalAmount",
+                    Name = "TotalAmount",
+                    HeaderText = "Total (£)",
+                    ReadOnly = true
+                });
+
+                // ComboBox for Status
+                var statusCol = new DataGridViewComboBoxColumn
+                {
+                    Name = "Status",
+                    DataPropertyName = "Status",
+                    HeaderText = "Status",
+                    DataSource = new[] { "Pending", "Completed", "Cancelled" }
+                };
+                ordersGridView.Columns.Add(statusCol);
+            }
+        }
+
+        private void ordersGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (ordersGridView.CurrentRow?.DataBoundItem is Order selectedOrder)
+            {
+                // Fetch order items as before
+                var items = OrderItemController.GetOrderItems(selectedOrder.OrderId);
+
+                // Assign names using dictionary
+                foreach (var item in items)
+                {
+                    if (idToName.TryGetValue(item.ItemId, out var name))
+                        item.MenuItemName = name;
+                    else
+                        item.MenuItemName = "(Unknown)";
+                }
+
+                SetupOrderItemsGrid();
+                orderItemsGridView.DataSource = new BindingList<OrderItem>(items);
+            }
+        }
+
+        private void SetupOrderItemsGrid()
+        {
+            orderItemsGridView.AutoGenerateColumns = false;
+            orderItemsGridView.AllowUserToAddRows = false;
+            orderItemsGridView.ReadOnly = true;
+            orderItemsGridView.Columns.Clear();
+
+            // Name (MenuItemName)
+            orderItemsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "MenuItemName",
+                Name = "MenuItemName",
+                HeaderText = "Item Name",
+                ReadOnly = true
+            });
+            // Price
+            orderItemsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "PriceAtOrder",
+                Name = "PriceAtOrder",
+                HeaderText = "Price",
+                ReadOnly = true
+            });
+            // Quantity
+            orderItemsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Quantity",
+                Name = "Quantity",
+                HeaderText = "Quantity",
+                ReadOnly = true
+            });
+        }
+
+        // Customer Tab Section
+        private void LoadCustomers()
+        {
+            customersGridView.AutoGenerateColumns = false;
+            customersGridView.Columns.Clear();
+
+            customersGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Name",
+                HeaderText = "Name"
+            });
+            customersGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Email",
+                HeaderText = "Email"
+            });
+            customersGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "PhoneNumber",
+                HeaderText = "Phone"
+            });
+            customersGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Address",
+                HeaderText = "Address"
+            });
+
+
+            var customers = AuthController.GetAllCustomers();
+            customersGridView.DataSource = new BindingList<Customer>(customers);
+        }
+
+        private void deleteCBtn_Click(object sender, EventArgs e)
+        {
+            if (customersGridView.SelectedRows.Count > 0)
+            {
+                var customer = customersGridView.SelectedRows[0].DataBoundItem as Customer;
+                if (customer != null && customer.Id > 0)
+                {
+                    // Prevent deleting customers with orders
+                    var orders = OrderController.GetOrdersForCustomer(customer.Id);
+                    if (orders != null && orders.Any())
+                    {
+                        MessageBox.Show("Cannot delete a customer with existing orders.");
+                        return;
+                    }
+
+                    var result = MessageBox.Show($"Delete '{customer.Name}'?", "Confirm", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        if (!AuthController.DeleteCustomer(customer.Id))
+                            MessageBox.Show("Delete failed.");
+                        else
+                            LoadCustomers();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a customer to delete.");
+            }
+        }
+
+        private void LoadAdmins()
+        {
+            adminsGridView.AutoGenerateColumns = false;
+            adminsGridView.Columns.Clear();
+
+            adminsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Name",
+                HeaderText = "Name"
+            });
+            adminsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Email",
+                HeaderText = "Email"
+            });
+            adminsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "CreatedAt",
+                HeaderText = "Registered"
+            });
+            adminsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Role",
+                HeaderText = "Role"
+            });
+
+            var admins = AuthController.GetAllAdmins();
+            adminsGridView.DataSource = new BindingList<Admin>(admins);
+        }
+
+        private void editABtn_Click(object sender, EventArgs e)
+        {
+            if (adminsGridView.SelectedRows.Count > 0)
+            {
+                var admin = adminsGridView.SelectedRows[0].DataBoundItem as Admin;
+                if (admin != null)
+                {
+                    var updateAdminForm = new UpdateAdminForm(admin);
+                    if (updateAdminForm.ShowDialog() == DialogResult.OK)
+                        LoadAdmins();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select an admin to edit.");
+            }
+        }
+
+        private void addABtn_Click(object sender, EventArgs e)
+        {
+            var registerAdminForm = new RegisterAdminForm(); // Your form for admin registration
+            if (registerAdminForm.ShowDialog() == DialogResult.OK)
+                LoadAdmins();
+        }
+
+        private void deleteABtn_Click(object sender, EventArgs e)
+        {
+            var admins = adminsGridView.DataSource as BindingList<Admin>;
+            if (adminsGridView.SelectedRows.Count > 0)
+            {
+                var admin = adminsGridView.SelectedRows[0].DataBoundItem as Admin;
+                if (admin != null)
+                {
+                    if (admins.Count <= 1)
+                    {
+                        MessageBox.Show("At least one admin must remain.");
+                        return;
+                    }
+
+                    var result = MessageBox.Show($"Delete admin '{admin.Name}'?", "Confirm", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        if (!AuthController.DeleteAdmin(admin.Id))
+                            MessageBox.Show("Delete failed.");
+                        else
+                            LoadAdmins();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select an admin to delete.");
+            }
+        }
+
+        private void logoutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AuthController.Logout();
+
+            MessageBox.Show("Logged out successfully.", "Logout", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Application.Restart();
+        }
     }
 }

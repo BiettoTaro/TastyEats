@@ -16,5 +16,9 @@ namespace TastyEats.Models
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
         
         public decimal TotalAmount { get; set; }
+
+        // for display 
+        public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
     }
 }

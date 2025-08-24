@@ -39,23 +39,29 @@ namespace TastyEats.Views
                 var user = AuthController.CurrentUser;
                 this.Hide();
 
-                if (_returnToForm is BaseForm baseForm)
-                {
-                    baseForm.SetLoginStatus(true);
-                    
-                    baseForm.Show();
-                }
-                else if (user is TastyEats.Models.Customer)
-                {
-                    var checkoutForm = new CheckoutForm();
-                    checkoutForm.ShowDialog();
-                }
-                else if (user is TastyEats.Models.Admin)
+                // If an admin logs in, always go to AdminForm
+                if (user is TastyEats.Models.Admin)
                 {
                     var adminForm = new AdminForm();
-                    adminForm.ShowDialog();
+                    adminForm.Show();
+                }
+                // If a customer logs in
+                else if (user is TastyEats.Models.Customer)
+                {
+                    // If we have a return-to form, show it
+                    if (_returnToForm is BaseForm baseForm)
+                    {
+                        baseForm.SetLoginStatus(true);
+                        baseForm.Show();
+                    }
+                    else
+                    {
+                        var homeForm = new HomeForm();
+                        homeForm.Show();
+                    }
                 }
 
+                // Always close the login form, otherwise it might hang around
                 this.Close();
             }
             else
@@ -65,6 +71,7 @@ namespace TastyEats.Views
                 passwordBox.Focus();
             }
         }
+
 
 
         private void signUpLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -14,7 +14,7 @@ namespace TastyEats.Models
         public int ItemId { get; set; }
         public decimal PriceAtOrder { get; set; }
         public int Quantity { get; set; }
-        
-        
+        public string MenuItemName { get; set; }
+
     }
 }

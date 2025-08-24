@@ -11,6 +11,7 @@ namespace TastyEats.Models
         
   
         public bool IsActive { get; set; } = true;
+        public string Role { get; set; } 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

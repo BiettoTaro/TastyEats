@@ -1,6 +1,7 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,39 @@ namespace TastyEats.Controllers
 {
     public class OrderController
     {
+
+        public static List<Order> GetAllOrders()
+        {
+            var orders = new List<Order>();
+
+            // Query to get all orders
+            var dt = DatabaseHandler.ExecuteQuery("SELECT * FROM orders ORDER BY order_id DESC", new Dictionary<string, object>());
+
+            foreach (DataRow row in dt.Rows)
+            {
+                orders.Add(new Order
+                {
+                    OrderId = Convert.ToInt32(row["order_id"]),
+                    CustomerId = Convert.ToInt32(row["customer_id"]),
+                    OrderDate = Convert.ToDateTime(row["order_date"]),
+                    TotalAmount = Convert.ToDecimal(row["total_amount"]),
+                    Status = row["status"]?.ToString() ?? "Pending"
+                });
+            }
+
+            return orders;
+        }
+
+        public static bool UpdateOrderStatus(int orderId, string status)
+        {
+            const string sql = @"UPDATE orders SET status = @status WHERE order_id = @id";
+            var p = new Dictionary<string, object>
+            {
+                ["@id"] = orderId,
+                ["@status"] = status
+            };
+            return DatabaseHandler.ExecuteNonQuery(sql, p) > 0;
+        }
 
         public void AddOrder(Order order)
         {
@@ -48,6 +82,14 @@ namespace TastyEats.Controllers
                 }
             }
         }
+
+        public static List<Order> GetOrdersForCustomer(int customerId)
+        {
+            var orders = GetAllOrders(); // Or your DB fetch for all orders
+            return orders.Where(o => o.CustomerId == customerId).ToList();
+        }
+
+
     }
 
 }

@@ -168,7 +168,7 @@ namespace TastyEats.Controllers
 
         public static List<Admin> GetAllAdmins()
         {
-            var dt = Query("SELECT admin_id, name, email, password_hash, is_active, created_at FROM admins", 
+            var dt = Query("SELECT admin_id, name, email, password_hash, is_active, admin_role, created_at FROM admins", 
                 new Dictionary<string, object>());
             var admins = new List<Admin>();
             foreach (DataRow row in dt.Rows)
@@ -180,14 +180,15 @@ namespace TastyEats.Controllers
         public static bool CreateAdmin(Admin a, string plainPassword)
         {
             const string sql = @"
-                INSERT INTO admins (name, email, password_hash, is_active, created_at)
-                VALUES (@name, @email, @hash, @active, @created)";
+                INSERT INTO admins (name, email, password_hash, is_active, admin_role, created_at)
+                VALUES (@name, @email, @hash, @active,@role, @created)";
             var p = new Dictionary<string, object>
             {
                 ["@name"] = a.Name,
                 ["@email"] = a.Email,
                 ["@hash"] = HashPassword(plainPassword),
                 ["@active"] = a.IsActive,
+                ["@role"] = a.Role,
                 ["@created"] = a.CreatedAt
             };
             return NonQuery(sql, p) > 0;
@@ -248,6 +249,7 @@ namespace TastyEats.Controllers
             Email = r["email"]?.ToString() ?? "",
             PasswordHash = r["password_hash"]?.ToString() ?? "",
             IsActive = r.Table.Columns.Contains("is_active") && r["is_active"] != DBNull.Value && Convert.ToBoolean(r["is_active"]),
+            Role = r.Table.Columns.Contains("admin_role") && r["admin_role"] != DBNull.Value ? r["admin_role"].ToString()! : "Staff",
             CreatedAt = r.Table.Columns.Contains("created_at") && r["created_at"] != DBNull.Value ? Convert.ToDateTime(r["created_at"]) : DateTime.UtcNow
         };
 
