@@ -4,6 +4,8 @@ using System.Data;
 using System.Linq;
 using TastyEats.Data;
 using TastyEats.Models;
+using TastyEats.Properties;
+
 
 namespace TastyEats.Controllers
 {
@@ -71,7 +73,9 @@ namespace TastyEats.Controllers
             Name = r["name"]?.ToString() ?? "",
             Description = r["description"]?.ToString() ?? "",
             Price = Convert.ToDecimal(r["price"]),
-            Image = r["image_path"]?.ToString() ?? "",
+            Image = string.IsNullOrWhiteSpace(r["image_path"]?.ToString())
+            ? "Resources/placeholder.png"   // fallback path
+            : r["image_path"]?.ToString() ?? "",
             CategoryId = Convert.ToInt32(r["category_id"]),
             AdminId = Convert.ToInt32(r["admin_id"]),
             IsAvailable = r.Table.Columns.Contains("is_available")

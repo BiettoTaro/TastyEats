@@ -69,7 +69,10 @@ namespace TastyEats.Views
                 string.IsNullOrWhiteSpace(emailBox.Text) ||
                 string.IsNullOrWhiteSpace(addressBox.Text))
             {
-                MessageBox.Show("Please fill in all required billing fields.", "Incomplete Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please fill in all required billing fields.",
+                                "Incomplete Information",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
                 return;
             }
 
@@ -82,50 +85,37 @@ namespace TastyEats.Views
 
                 if (cardError != null)
                 {
-                    MessageBox.Show(cardError, "Invalid Card Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(cardError, "Invalid Card Info",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
                     return;
                 }
             }
 
-            // Build order
-            string paymentMethod = isCardPayment ? "Card" : "Cash";
-            var order = new Order
-            {
-                CustomerId = user.Id,
-                OrderDate = DateTime.Now,
-                Status = "Pending",
-                TotalAmount = Controllers.CartController.GetTotalPrice(),
-                Items = new List<OrderItem>()
-            };
-
-            foreach (var cartItem in CartController.GetItems())
-            {
-                order.Items.Add(new OrderItem
-                {
-                    ItemId = cartItem.ItemId,
-                    Quantity = cartItem.Quantity,
-                    PriceAtOrder = cartItem.Price
-                });
-            }
-
-            // Static call to OrderController
             try
             {
-                OrderController.AddOrder(order);
+                string paymentMethod = isCardPayment ? "Card" : "Cash";
+
+                // Use PaymentController instead of building order
+                var order = PaymentController.ProcessOrder(AuthController.CurrentUser!, paymentMethod);
+
                 MessageBox.Show(
                     $"Order placed!\n\nOrder Number: {order.OrderId}\nDate: {order.OrderDate}\nTotal: £{order.TotalAmount:F2}",
                     "Order Confirmation",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                Controllers.CartController.ClearCart();
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error placing order: {ex.Message}", "Order Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error placing order: {ex.Message}",
+                                "Order Failed",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
+
 
 
 
