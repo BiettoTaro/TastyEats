@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
+using System.Windows.Forms; 
 using Npgsql;
 
 namespace TastyEats.Data
@@ -20,41 +18,73 @@ namespace TastyEats.Data
 
         public static NpgsqlConnection GetConnection()
         {
-            return new NpgsqlConnection(connString);
+            try
+            {
+                return new NpgsqlConnection(connString);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error creating DB connection: {ex.Message}",
+                                "Database Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                throw; // still throw so higher layers know connection failed
+            }
         }
 
         public static DataTable ExecuteQuery(string query, Dictionary<string, object>? parameters = null)
         {
-            using var conn = new NpgsqlConnection(connString);
-            conn.Open();
-
-            using var cmd = new NpgsqlCommand(query, conn);
-            if (parameters != null)
+            try
             {
-                foreach (var pair in parameters)
-                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
-            }
+                using var conn = new NpgsqlConnection(connString);
+                conn.Open();
 
-            using var reader = cmd.ExecuteReader();
-            var dt = new DataTable();
-            dt.Load(reader);
-            return dt;
+                using var cmd = new NpgsqlCommand(query, conn);
+                if (parameters != null)
+                {
+                    foreach (var pair in parameters)
+                        cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                }
+
+                using var reader = cmd.ExecuteReader();
+                var dt = new DataTable();
+                dt.Load(reader);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Query failed: {ex.Message}",
+                                "Database Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                throw; // rethrow so controllers can decide what to do
+            }
         }
 
         public static int ExecuteNonQuery(string query, Dictionary<string, object>? parameters = null)
         {
-            using var conn = new NpgsqlConnection(connString);
-            conn.Open();
-
-            using var cmd = new NpgsqlCommand(query, conn);
-            if (parameters != null)
+            try
             {
-                foreach (var pair in parameters)
-                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                using var conn = new NpgsqlConnection(connString);
+                conn.Open();
+
+                using var cmd = new NpgsqlCommand(query, conn);
+                if (parameters != null)
+                {
+                    foreach (var pair in parameters)
+                        cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                }
+
+                return cmd.ExecuteNonQuery();
             }
-
-            return cmd.ExecuteNonQuery();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Command failed: {ex.Message}",
+                                "Database Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return -1; // indicate failure gracefully
+            }
         }
-
     }
 }
