@@ -11,10 +11,10 @@ namespace TastyEats.Controllers
     public static class AuthController
     {
         //  Test hooks 
-        internal static Func<string, Dictionary<string, object>, DataTable> Query =
+        public static Func<string, Dictionary<string, object>, DataTable> Query =
             (sql, p) => DatabaseHandler.ExecuteQuery(sql, p);
 
-        internal static Func<string, Dictionary<string, object>, int> NonQuery =
+        public static Func<string, Dictionary<string, object>, int> NonQuery =
             (sql, p) => DatabaseHandler.ExecuteNonQuery(sql, p);
 
         //  Session 
@@ -25,12 +25,22 @@ namespace TastyEats.Controllers
         //  Login 
         public static bool Login(string email, string password)
         {
-            var user = GetCustomerByEmail(email) ?? (User?)GetAdminByEmail(email);
-            if (AuthenticateResolvedUser(user, password))
+            var cust = GetCustomerByEmail(email);
+            if (cust != null && VerifyPassword(password, cust.PasswordHash))
             {
-                SetActiveStatus(user!.Email, true);
+                CurrentUser = cust;
+                SetActiveStatus(cust, true);
                 return true;
             }
+
+            var admin = GetAdminByEmail(email);
+            if (admin != null && VerifyPassword(password, admin.PasswordHash))
+            {
+                CurrentUser = admin;
+                SetActiveStatus(admin, true);
+                return true;
+            }
+
             return false;
         }
 
@@ -38,30 +48,27 @@ namespace TastyEats.Controllers
         {
             if (CurrentUser != null)
             {
-                SetActiveStatus(CurrentUser.Email, false);
+                SetActiveStatus(CurrentUser, false);
                 CurrentUser = null;
             }
         }
 
-        private static void SetActiveStatus(string email, bool isActive)
+
+        private static void SetActiveStatus(User user, bool isActive)
         {
-            string table;
+            string table = user is Customer ? "customers" : "admins";
+
             var parameters = new Dictionary<string, object>
             {
                 ["@active"] = isActive,
-                ["@email"] = email
+                ["@email"] = user.Email
             };
-
-            if (GetCustomerByEmail(email) != null)
-                table = "customers";
-            else if (GetAdminByEmail(email) != null)
-                table = "admins";
-            else
-                return; // unknown user
 
             string sql = $"UPDATE {table} SET is_active = @active WHERE email = @email";
             NonQuery(sql, parameters);
         }
+
+
 
         //  Lookups
         public static Customer? GetCustomerByEmail(string email)
@@ -188,7 +195,7 @@ namespace TastyEats.Controllers
                 ["@email"] = a.Email,
                 ["@hash"] = HashPassword(plainPassword),
                 ["@active"] = a.IsActive,
-                ["@role"] = a.Role,
+                ["@role"] = string.IsNullOrWhiteSpace(a.Role) ? "Staff" : a.Role,
                 ["@created"] = a.CreatedAt
             };
             return NonQuery(sql, p) > 0;
@@ -253,13 +260,15 @@ namespace TastyEats.Controllers
             CreatedAt = r.Table.Columns.Contains("created_at") && r["created_at"] != DBNull.Value ? Convert.ToDateTime(r["created_at"]) : DateTime.UtcNow
         };
 
-        internal static bool AuthenticateResolvedUser(User? user, string password)
+        public static bool AuthenticateResolvedUser(User? user, string password)
         {
             if (user == null) return false;
             if (!VerifyPassword(password, user.PasswordHash)) return false;
 
-            CurrentUser = user;
+            CurrentUser = user;   // ✅ store the logged-in user
             return true;
         }
+
+
     }
 }

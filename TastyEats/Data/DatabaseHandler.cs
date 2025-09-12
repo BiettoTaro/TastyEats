@@ -12,7 +12,10 @@ namespace TastyEats.Data
         private static readonly string port = "5432";
         private static readonly string username = "postgres";
         private static readonly string password = "postgres123";
-        private static readonly string database = "tastyeats";
+        private static readonly string database = 
+            AppDomain.CurrentDomain.FriendlyName.Contains("test", StringComparison.OrdinalIgnoreCase)
+            ? "tastyeats_test" // database for integration tests
+            : "tastyeats"; // main application database
 
         private static readonly string connString = $"Host={host};Port={port};Username={username};Password={password};Database={database}";
 
@@ -72,19 +75,28 @@ namespace TastyEats.Data
                 if (parameters != null)
                 {
                     foreach (var pair in parameters)
-                        cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                        cmd.Parameters.AddWithValue(pair.Key, pair.Value ?? DBNull.Value);
                 }
 
                 return cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
+                // In tests: throw 
+                if (AppDomain.CurrentDomain.FriendlyName.Contains("test", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"[DB ERROR] {ex.Message}");
+                    throw;
+                }
+
+                // In app: fail gracefully
                 MessageBox.Show($"Command failed: {ex.Message}",
                                 "Database Error",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
-                return -1; // indicate failure gracefully
+                return -1;
             }
         }
+
     }
 }

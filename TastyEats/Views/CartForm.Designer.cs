@@ -28,7 +28,7 @@
             // 
             // navbarControl1
             // 
-            navbarControl1.Size = new Size(667, 52);
+            navbarControl1.Size = new Size(663, 52);
             // 
             // cartPanel
             // 
@@ -70,9 +70,9 @@
             // 
             // CartForm
             // 
-            AutoScaleDimensions = new SizeF(11F, 22F);
+            AutoScaleDimensions = new SizeF(8F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(667, 337);
+            ClientSize = new Size(663, 337);
             Controls.Add(btnClearCart);
             Controls.Add(btnCheckout);
             Controls.Add(totalLabel);
