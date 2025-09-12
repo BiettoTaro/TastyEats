@@ -82,7 +82,6 @@
             Name = "CartForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Your Cart";
-            Load += CartForm_Load;
             Controls.SetChildIndex(cartPanel, 0);
             Controls.SetChildIndex(totalLabel, 0);
             Controls.SetChildIndex(btnCheckout, 0);
