@@ -102,9 +102,11 @@ namespace TastyEats.Views
                 // Remove Button
                 var btnRemove = new Button
                 {
+                    AutoSize = true,
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
                     Text = (item.Quantity > 1) ? "Remove One" : "Remove",
                     Location = new Point(320, 8),
-                    Size = new Size(90, 28)
+                    
                 };
                 btnRemove.Click += (s, e) =>
                 {

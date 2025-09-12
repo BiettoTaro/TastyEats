@@ -28,15 +28,15 @@
             // 
             // navbarControl1
             // 
-            navbarControl1.Size = new Size(667, 37);
+            navbarControl1.Size = new Size(667, 52);
             // 
             // cartPanel
             // 
             cartPanel.AutoScroll = true;
             cartPanel.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cartPanel.Location = new Point(14, 34);
+            cartPanel.Location = new Point(14, 60);
             cartPanel.Name = "cartPanel";
-            cartPanel.Size = new Size(640, 258);
+            cartPanel.Size = new Size(640, 232);
             cartPanel.TabIndex = 0;
             // 
             // totalLabel
@@ -70,7 +70,7 @@
             // 
             // CartForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 14F);
+            AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(667, 337);
             Controls.Add(btnClearCart);

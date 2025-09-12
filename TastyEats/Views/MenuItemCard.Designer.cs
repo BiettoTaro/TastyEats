@@ -40,20 +40,23 @@
             // nameLabel
             // 
             nameLabel.Font = new Font("Verdana", 11.1F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            nameLabel.Location = new Point(140, 0);
-            nameLabel.MaximumSize = new Size(150, 0);
+            nameLabel.Location = new Point(199, 9);
+            nameLabel.Margin = new Padding(4, 0, 4, 0);
+            nameLabel.MaximumSize = new Size(214, 0);
             nameLabel.Name = "nameLabel";
-            nameLabel.Size = new Size(150, 40);
+            nameLabel.Size = new Size(214, 84);
             nameLabel.TabIndex = 4;
+            nameLabel.Text = "Name";
             // 
             // descriptionLabel
             // 
             descriptionLabel.AutoSize = true;
             descriptionLabel.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            descriptionLabel.Location = new Point(140, 56);
-            descriptionLabel.MaximumSize = new Size(124, 0);
+            descriptionLabel.Location = new Point(200, 93);
+            descriptionLabel.Margin = new Padding(4, 0, 4, 0);
+            descriptionLabel.MaximumSize = new Size(177, 0);
             descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new Size(77, 14);
+            descriptionLabel.Size = new Size(111, 22);
             descriptionLabel.TabIndex = 1;
             descriptionLabel.Text = "Description";
             // 
@@ -61,17 +64,19 @@
             // 
             priceLabel.AutoSize = true;
             priceLabel.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            priceLabel.Location = new Point(211, 133);
+            priceLabel.Location = new Point(301, 222);
+            priceLabel.Margin = new Padding(4, 0, 4, 0);
             priceLabel.Name = "priceLabel";
-            priceLabel.Size = new Size(41, 14);
+            priceLabel.Size = new Size(61, 22);
             priceLabel.TabIndex = 2;
             priceLabel.Text = "Price";
             // 
             // pictureBoxItem
             // 
             pictureBoxItem.Location = new Point(0, 0);
+            pictureBoxItem.Margin = new Padding(4, 5, 4, 5);
             pictureBoxItem.Name = "pictureBoxItem";
-            pictureBoxItem.Size = new Size(134, 120);
+            pictureBoxItem.Size = new Size(191, 200);
             pictureBoxItem.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxItem.TabIndex = 3;
             pictureBoxItem.TabStop = false;
@@ -85,9 +90,10 @@
             // 
             // addButton
             // 
-            addButton.Location = new Point(3, 129);
+            addButton.Location = new Point(4, 215);
+            addButton.Margin = new Padding(4, 5, 4, 5);
             addButton.Name = "addButton";
-            addButton.Size = new Size(75, 23);
+            addButton.Size = new Size(107, 38);
             addButton.TabIndex = 5;
             addButton.Text = "Add";
             addButton.UseVisualStyleBackColor = true;
@@ -95,7 +101,7 @@
             // 
             // MenuItemCard
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(addButton);
@@ -103,8 +109,9 @@
             Controls.Add(priceLabel);
             Controls.Add(descriptionLabel);
             Controls.Add(nameLabel);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "MenuItemCard";
-            Size = new Size(294, 157);
+            Size = new Size(420, 262);
             ((System.ComponentModel.ISupportInitialize)pictureBoxItem).EndInit();
             ResumeLayout(false);
             PerformLayout();
