@@ -15,8 +15,8 @@ namespace TastyEats.Helpers
             if (customer == null) return;
             name.Text = customer.Name;
             email.Text = customer.Email;
-            phone.Text = customer.PhoneNumber;
-            address.Text = customer.Address;
+            phone.Text = customer.PhoneNumber ?? string.Empty;
+            address.Text = customer.Address ?? string.Empty;
         }
     }
 }

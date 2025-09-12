@@ -17,7 +17,7 @@ namespace TastyEats.Views
     public partial class CheckoutForm : Form
     {
         User user = AuthController.CurrentUser;
-        private OrderController OrderController = new OrderController();
+        
 
         public CheckoutForm()
         {
@@ -108,6 +108,7 @@ namespace TastyEats.Views
                 });
             }
 
+            // Static call to OrderController
             try
             {
                 OrderController.AddOrder(order);
@@ -117,15 +118,15 @@ namespace TastyEats.Views
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                Controllers.CartController.ClearCart(); // Clear cart after success only
+                Controllers.CartController.ClearCart();
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error placing order: {ex.Message}", "Order Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // Cart is NOT cleared if order fails
             }
         }
+
 
 
     }

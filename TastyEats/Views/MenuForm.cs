@@ -38,20 +38,19 @@ namespace TastyEats
         {
             try
             {
-                string query = "SELECT item_id, name, description, price, category_id, image_path FROM menu_items WHERE is_available = true";
-                DataTable menuItems = DatabaseHandler.ExecuteQuery(query);
-
                 menuFlowPanel.Controls.Clear();
 
-                var cards = menuItems.AsEnumerable().Select(row =>
+                var menuItems = Controllers.MenuItemController.GetAllMenuItems();
+
+                var cards = menuItems.Select(item =>
                 {
                     var card = new MenuItemCard();
                     card.setupCard(
-                        row.Field<int>("item_id"),
-                        row.Field<string>("name") ?? string.Empty,
-                        row.Field<string>("description") ?? string.Empty,
-                        row.Field<decimal>("price"),
-                        row.Field<string>("image_path") ?? string.Empty
+                        item.Id,
+                        item.Name,
+                        item.Description,
+                        item.Price,
+                        item.Image
                     );
                     return card;
                 });
@@ -61,9 +60,13 @@ namespace TastyEats
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading menu items: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error loading menu items: {ex.Message}",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
+
 
 
         private void btnCart_Click(object sender, EventArgs e)

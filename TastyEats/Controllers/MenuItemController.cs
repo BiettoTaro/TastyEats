@@ -9,22 +9,21 @@ namespace TastyEats.Controllers
 {
     public static class MenuItemController
     {
-        // 🔹 Delegate + Event
+        //  Delegate + Event
         public delegate void MenuChangedHandler(MenuItem item, string action);
         public static event MenuChangedHandler? OnMenuChanged;
 
         public static List<MenuItem> GetAllMenuItems()
         {
             var dt = DatabaseHandler.ExecuteQuery(
-                "SELECT * FROM menu_items ORDER BY item_id",
-                new Dictionary<string, object>()
+                "SELECT item_id, name, description, price, image_path, category_id, admin_id, is_available FROM menu_items ORDER BY item_id"
             );
 
-            // 🔹 LINQ to map DataTable → List<MenuItem>
             return dt.AsEnumerable()
                      .Select(MapMenuItem)
                      .ToList();
         }
+
 
         public static bool AddMenuItem(MenuItem item)
         {

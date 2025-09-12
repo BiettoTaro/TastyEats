@@ -32,7 +32,7 @@
             descriptionLabel = new Label();
             priceLabel = new Label();
             pictureBoxItem = new PictureBox();
-            label2 = new Label();
+      
             addButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxItem).BeginInit();
             SuspendLayout();
@@ -76,13 +76,7 @@
             pictureBoxItem.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxItem.TabIndex = 3;
             pictureBoxItem.TabStop = false;
-            // 
-            // label2
-            // 
-            label2.Location = new Point(0, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(100, 23);
-            label2.TabIndex = 0;
+          
             // 
             // addButton
             // 
@@ -117,8 +111,6 @@
         private Label descriptionLabel;
         private Label priceLabel;
         private PictureBox pictureBoxItem;
-        private Label label1;
-        private Label label2;
         private Button addButton;
     }
 }

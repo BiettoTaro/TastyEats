@@ -8,7 +8,7 @@ namespace TastyEats.Controllers
     internal static class CartController
     {
         // Delegate and Event for UI updates
-        public delegate void CartChangedHandler(CartItem item, string action);
+        public delegate void CartChangedHandler(CartItem? item, string action);
         public static event CartChangedHandler? OnCartChanged;
 
         public static void AddToCart(CartItem item)
