@@ -3,17 +3,16 @@ version: "3.9"
 services:
   db:
     image: postgres:15
-    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
-      POSTGRES_DB: tastyeats
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=tastyeats
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - tastynet
+      - ./db/create_dbs.sql:/docker-entrypoint-initdb.d/create_dbs.sql
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
 
   adminer:
     image: adminer
@@ -25,6 +24,3 @@ services:
 
 networks:
   tastynet:
-
-volumes:
-  pgdata:

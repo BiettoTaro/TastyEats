@@ -8,7 +8,9 @@ namespace TastyEats.Data
 {
     public static class DatabaseHandler
     {
-        private static readonly string host = "192.168.1.131";
+        //private static readonly string host = "192.168.1.131";  // Home
+        private static readonly string host = "10.2.93.230"; // School
+        //private static readonly string host = "localhost";  // Submission
         private static readonly string port = "5432";
         private static readonly string username = "postgres";
         private static readonly string password = "postgres123";
