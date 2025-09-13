@@ -33,6 +33,7 @@
             passwordBox = new TextBox();
             loginBtn = new Button();
             signUpLink = new LinkLabel();
+            backBtn = new Button();
             SuspendLayout();
             // 
             // label1
@@ -63,7 +64,6 @@
             passwordBox.Size = new Size(151, 22);
             passwordBox.TabIndex = 2;
             passwordBox.UseSystemPasswordChar = true;
-            passwordBox.TextChanged += passwordBox_TextChanged;
             // 
             // loginBtn
             // 
@@ -87,11 +87,23 @@
             signUpLink.Text = "Sign Up";
             signUpLink.LinkClicked += signUpLink_LinkClicked;
             // 
+            // backBtn
+            // 
+            backBtn.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            backBtn.Location = new Point(12, 44);
+            backBtn.Name = "backBtn";
+            backBtn.Size = new Size(35, 23);
+            backBtn.TabIndex = 44;
+            backBtn.Text = "⬅";
+            backBtn.UseVisualStyleBackColor = true;
+            backBtn.Click += backBtn_Click;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(306, 355);
+            Controls.Add(backBtn);
             Controls.Add(signUpLink);
             Controls.Add(loginBtn);
             Controls.Add(passwordBox);
@@ -99,7 +111,7 @@
             Controls.Add(label1);
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "]";
+            Text = "Login";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -111,5 +123,6 @@
         private TextBox passwordBox;
         private Button loginBtn;
         private LinkLabel signUpLink;
+        private Button backBtn;
     }
 }

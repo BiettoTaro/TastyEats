@@ -35,7 +35,6 @@
             // 
             // navbarControl1
             // 
-            navbarControl1.BackColor = SystemColors.Info;
             navbarControl1.Size = new Size(603, 40);
             // 
             // welcomeLbl
@@ -82,13 +81,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.tasty_background;
             BackgroundImageLayout = ImageLayout.Zoom;
-            ClientSize = new Size(603, 342);
+            ClientSize = new Size(603, 337);
             Controls.Add(homeBtn);
             Controls.Add(label2);
             Controls.Add(welcomeLbl);
             Name = "HomeForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "HomeForm";
+            Text = "Home";
             Controls.SetChildIndex(navbarControl1, 0);
             Controls.SetChildIndex(welcomeLbl, 0);
             Controls.SetChildIndex(label2, 0);

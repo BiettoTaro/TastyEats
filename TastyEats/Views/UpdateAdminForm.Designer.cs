@@ -180,7 +180,7 @@
             Controls.Add(fullNameLbl);
             Name = "UpdateAdminForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "UpdateAdminForm";
+            Text = "Edit Admin";
             ResumeLayout(false);
             PerformLayout();
         }

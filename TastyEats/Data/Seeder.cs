@@ -17,20 +17,24 @@ namespace TastyEats.Data
 
         private static void SeedAdmin()
         {
+            // Default admin
             var existing = AuthController.GetAdminByEmail("admin@example.com");
-            if (existing != null) return;
-
-            var admin = new Admin
+            if (existing == null)
             {
-                Name = "Admin",
-                Email = "admin@example.com",
-                PasswordHash = "", 
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow
-            };
+                var admin = new Admin
+                {
+                    Name = "Admin",
+                    Email = "admin@example.com",
+                    PasswordHash = "",
+                    IsActive = true,
+                    CreatedAt = DateTime.UtcNow
+                };
+                AuthController.CreateAdmin(admin, "password"); // default password
+            }
 
-            AuthController.CreateAdmin(admin, "password");
+            
         }
+
 
         private static void SeedCategories()
         {

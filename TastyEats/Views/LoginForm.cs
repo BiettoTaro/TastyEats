@@ -21,10 +21,7 @@ namespace TastyEats.Views
         }
         public LoginForm() : this(null) { }
 
-        private void passwordBox_TextChanged(object sender, EventArgs e)
-        {
 
-        }
 
         private void loginBtn_Click(object sender, EventArgs e)
         {
@@ -80,6 +77,15 @@ namespace TastyEats.Views
             var registerForm = new RegisterForm();
             registerForm.ShowDialog();
             this.Show(); // Show the login form again after registration
+        }
+
+        private void backBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            var homeForm = new HomeForm();
+            homeForm.Show();
+            this.Close();
         }
     }
 }

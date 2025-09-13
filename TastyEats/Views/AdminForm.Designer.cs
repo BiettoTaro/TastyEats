@@ -65,10 +65,10 @@
             adminTab.Controls.Add(adminsTab);
             adminTab.Controls.Add(menuTab);
             adminTab.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            adminTab.Location = new Point(0, 25);
+            adminTab.Location = new Point(0, 27);
             adminTab.Name = "adminTab";
             adminTab.SelectedIndex = 0;
-            adminTab.Size = new Size(799, 424);
+            adminTab.Size = new Size(799, 422);
             adminTab.TabIndex = 0;
             adminTab.SelectedIndexChanged += adminTab_SelectedIndexChanged;
             // 
@@ -79,7 +79,7 @@
             ordersTab.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ordersTab.Location = new Point(4, 23);
             ordersTab.Name = "ordersTab";
-            ordersTab.Size = new Size(791, 422);
+            ordersTab.Size = new Size(791, 395);
             ordersTab.TabIndex = 0;
             ordersTab.Text = "Orders";
             ordersTab.UseVisualStyleBackColor = true;
@@ -89,6 +89,7 @@
             orderItemsGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             orderItemsGridView.Location = new Point(3, 259);
             orderItemsGridView.Name = "orderItemsGridView";
+            orderItemsGridView.RowHeadersWidth = 102;
             orderItemsGridView.Size = new Size(788, 160);
             orderItemsGridView.TabIndex = 1;
             // 
@@ -97,6 +98,7 @@
             ordersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             ordersGridView.Location = new Point(3, 8);
             ordersGridView.Name = "ordersGridView";
+            ordersGridView.RowHeadersWidth = 102;
             ordersGridView.Size = new Size(788, 245);
             ordersGridView.TabIndex = 0;
             ordersGridView.CellValueChanged += ordersGridView_CellValueChanged;
@@ -108,8 +110,8 @@
             customersTab.Controls.Add(customersGridView);
             customersTab.Location = new Point(4, 23);
             customersTab.Name = "customersTab";
-            customersTab.Padding = new Padding(3);
-            customersTab.Size = new Size(791, 422);
+            customersTab.Padding = new Padding(3, 3, 3, 3);
+            customersTab.Size = new Size(791, 395);
             customersTab.TabIndex = 1;
             customersTab.Text = "Customers";
             customersTab.UseVisualStyleBackColor = true;
@@ -134,6 +136,7 @@
             customersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             customersGridView.Location = new Point(0, 0);
             customersGridView.Name = "customersGridView";
+            customersGridView.RowHeadersWidth = 102;
             customersGridView.Size = new Size(791, 355);
             customersGridView.TabIndex = 4;
             // 
@@ -145,8 +148,8 @@
             adminsTab.Controls.Add(adminsGridView);
             adminsTab.Location = new Point(4, 23);
             adminsTab.Name = "adminsTab";
-            adminsTab.Padding = new Padding(3);
-            adminsTab.Size = new Size(791, 397);
+            adminsTab.Padding = new Padding(3, 3, 3, 3);
+            adminsTab.Size = new Size(791, 395);
             adminsTab.TabIndex = 2;
             adminsTab.Text = "Admins";
             adminsTab.UseVisualStyleBackColor = true;
@@ -195,6 +198,7 @@
             adminsGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             adminsGridView.Location = new Point(0, 0);
             adminsGridView.Name = "adminsGridView";
+            adminsGridView.RowHeadersWidth = 102;
             adminsGridView.Size = new Size(791, 355);
             adminsGridView.TabIndex = 4;
             // 
@@ -206,8 +210,8 @@
             menuTab.Controls.Add(menuItemsGridView);
             menuTab.Location = new Point(4, 23);
             menuTab.Name = "menuTab";
-            menuTab.Padding = new Padding(3);
-            menuTab.Size = new Size(791, 422);
+            menuTab.Padding = new Padding(3, 3, 3, 3);
+            menuTab.Size = new Size(791, 395);
             menuTab.TabIndex = 3;
             menuTab.Text = "Menu";
             menuTab.UseVisualStyleBackColor = true;
@@ -256,6 +260,7 @@
             menuItemsGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             menuItemsGridView.Location = new Point(0, 0);
             menuItemsGridView.Name = "menuItemsGridView";
+            menuItemsGridView.RowHeadersWidth = 102;
             menuItemsGridView.Size = new Size(791, 355);
             menuItemsGridView.TabIndex = 0;
             menuItemsGridView.UserDeletingRow += menuItemsGridView_UserDeletingRow;
@@ -275,12 +280,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(803, 450);
             Controls.Add(logoutLink);
             Controls.Add(adminTab);
             Name = "AdminForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "AdminForm";
+            Text = "Admin";
             Load += AdminForm_Load;
             adminTab.ResumeLayout(false);
             ordersTab.ResumeLayout(false);

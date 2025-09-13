@@ -79,7 +79,24 @@ namespace TastyEats.Controllers
 
         // Helpers with LINQ
         public static decimal GetTotalPrice() => Cart.Items.Sum(i => i.TotalPrice);
-        public static IReadOnlyList<CartItem> GetItems() => Cart.Items.ToList();
+        public static IReadOnlyList<CartItem> GetItems()
+        {
+            foreach (var item in Cart.Items)
+            {
+                if (string.IsNullOrWhiteSpace(item.Name) || item.Price <= 0)
+                {
+                    var menuItem = MenuItemController.GetMenuItemById(item.ItemId);
+                    if (menuItem != null)
+                    {
+                        item.Name = menuItem.Name;
+                        item.Price = menuItem.Price;
+                        item.ImagePath = menuItem.Image;
+                    }
+                }
+            }
+            return Cart.Items.ToList();
+        }
+
 
         // Helper for first or default refactoring
         private static CartItem? FindLine(Guid lineId) =>

@@ -47,7 +47,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label6.Location = new Point(57, 272);
+            label6.Location = new Point(39, 272);
             label6.Name = "label6";
             label6.Size = new Size(138, 16);
             label6.TabIndex = 42;
@@ -57,7 +57,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label5.Location = new Point(57, 234);
+            label5.Location = new Point(39, 234);
             label5.Name = "label5";
             label5.Size = new Size(77, 16);
             label5.TabIndex = 41;
@@ -67,7 +67,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label2.Location = new Point(57, 136);
+            label2.Location = new Point(39, 136);
             label2.Name = "label2";
             label2.Size = new Size(78, 16);
             label2.TabIndex = 38;
@@ -77,7 +77,7 @@
             // 
             emailLbl.AutoSize = true;
             emailLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            emailLbl.Location = new Point(57, 91);
+            emailLbl.Location = new Point(39, 91);
             emailLbl.Name = "emailLbl";
             emailLbl.Size = new Size(47, 16);
             emailLbl.TabIndex = 37;
@@ -86,7 +86,7 @@
             // nameBox
             // 
             nameBox.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            nameBox.Location = new Point(201, 130);
+            nameBox.Location = new Point(183, 130);
             nameBox.Name = "nameBox";
             nameBox.PlaceholderText = "Enter your name";
             nameBox.Size = new Size(151, 22);
@@ -95,7 +95,7 @@
             // confirmPasswordBox
             // 
             confirmPasswordBox.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            confirmPasswordBox.Location = new Point(201, 266);
+            confirmPasswordBox.Location = new Point(183, 266);
             confirmPasswordBox.Name = "confirmPasswordBox";
             confirmPasswordBox.PlaceholderText = "Confirm Password";
             confirmPasswordBox.Size = new Size(151, 22);
@@ -105,7 +105,7 @@
             // registerBtn
             // 
             registerBtn.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            registerBtn.Location = new Point(201, 307);
+            registerBtn.Location = new Point(183, 307);
             registerBtn.Name = "registerBtn";
             registerBtn.Size = new Size(151, 23);
             registerBtn.TabIndex = 35;
@@ -116,7 +116,7 @@
             // passwordBox
             // 
             passwordBox.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            passwordBox.Location = new Point(201, 228);
+            passwordBox.Location = new Point(183, 228);
             passwordBox.Name = "passwordBox";
             passwordBox.PlaceholderText = "Create a Password";
             passwordBox.Size = new Size(151, 22);
@@ -126,7 +126,7 @@
             // emailBox
             // 
             emailBox.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            emailBox.Location = new Point(201, 89);
+            emailBox.Location = new Point(183, 89);
             emailBox.Name = "emailBox";
             emailBox.PlaceholderText = "Enter your email";
             emailBox.Size = new Size(151, 22);
@@ -136,7 +136,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe Script", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(123, 27);
+            label1.Location = new Point(105, 27);
             label1.Name = "label1";
             label1.Size = new Size(147, 40);
             label1.TabIndex = 36;
@@ -145,7 +145,7 @@
             // backBtn
             // 
             backBtn.Font = new Font("Verdana", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            backBtn.Location = new Point(57, 307);
+            backBtn.Location = new Point(39, 307);
             backBtn.Name = "backBtn";
             backBtn.Size = new Size(35, 23);
             backBtn.TabIndex = 43;
@@ -157,7 +157,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label3.Location = new Point(57, 180);
+            label3.Location = new Point(39, 180);
             label3.Name = "label3";
             label3.Size = new Size(39, 16);
             label3.TabIndex = 44;
@@ -167,7 +167,7 @@
             // 
             roleComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             roleComboBox.FormattingEnabled = true;
-            roleComboBox.Location = new Point(201, 178);
+            roleComboBox.Location = new Point(183, 178);
             roleComboBox.Name = "roleComboBox";
             roleComboBox.Size = new Size(151, 23);
             roleComboBox.TabIndex = 45;
@@ -176,7 +176,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(391, 372);
+            ClientSize = new Size(370, 372);
             Controls.Add(roleComboBox);
             Controls.Add(label3);
             Controls.Add(backBtn);
@@ -192,7 +192,7 @@
             Controls.Add(label1);
             Name = "RegisterAdminForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "RegisterAdminForm";
+            Text = "Register Admin";
             Load += RegisterAdminForm_Load;
             ResumeLayout(false);
             PerformLayout();

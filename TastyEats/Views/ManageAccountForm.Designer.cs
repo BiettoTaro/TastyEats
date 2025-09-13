@@ -48,7 +48,7 @@
             // 
             // navbarControl1
             // 
-            navbarControl1.Size = new Size(800, 40);
+            navbarControl1.Size = new Size(680, 40);
             // 
             // deleteBtn
             // 
@@ -68,7 +68,7 @@
             updateBtn.BackColor = Color.FromArgb(0, 192, 0);
             updateBtn.FlatStyle = FlatStyle.Popup;
             updateBtn.Font = new Font("Verdana", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            updateBtn.Location = new Point(534, 391);
+            updateBtn.Location = new Point(482, 391);
             updateBtn.Name = "updateBtn";
             updateBtn.Size = new Size(187, 34);
             updateBtn.TabIndex = 34;
@@ -79,7 +79,7 @@
             // newPassBox
             // 
             newPassBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            newPassBox.Location = new Point(534, 101);
+            newPassBox.Location = new Point(482, 98);
             newPassBox.Name = "newPassBox";
             newPassBox.Size = new Size(187, 23);
             newPassBox.TabIndex = 28;
@@ -162,7 +162,7 @@
             // 
             newPassLbl.AutoSize = true;
             newPassLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            newPassLbl.Location = new Point(373, 104);
+            newPassLbl.Location = new Point(321, 101);
             newPassLbl.Name = "newPassLbl";
             newPassLbl.Size = new Size(112, 16);
             newPassLbl.TabIndex = 38;
@@ -172,7 +172,7 @@
             // 
             confPassLbl.AutoSize = true;
             confPassLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            confPassLbl.Location = new Point(373, 153);
+            confPassLbl.Location = new Point(321, 150);
             confPassLbl.Name = "confPassLbl";
             confPassLbl.Size = new Size(138, 16);
             confPassLbl.TabIndex = 40;
@@ -181,7 +181,7 @@
             // confPassBox
             // 
             confPassBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            confPassBox.Location = new Point(534, 150);
+            confPassBox.Location = new Point(482, 147);
             confPassBox.Name = "confPassBox";
             confPassBox.Size = new Size(187, 23);
             confPassBox.TabIndex = 39;
@@ -191,7 +191,7 @@
             // 
             oldPassLbl.AutoSize = true;
             oldPassLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            oldPassLbl.Location = new Point(373, 201);
+            oldPassLbl.Location = new Point(321, 198);
             oldPassLbl.Name = "oldPassLbl";
             oldPassLbl.Size = new Size(105, 16);
             oldPassLbl.TabIndex = 42;
@@ -200,7 +200,7 @@
             // oldPassBox
             // 
             oldPassBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            oldPassBox.Location = new Point(534, 198);
+            oldPassBox.Location = new Point(482, 195);
             oldPassBox.Name = "oldPassBox";
             oldPassBox.Size = new Size(187, 23);
             oldPassBox.TabIndex = 41;
@@ -210,7 +210,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(680, 450);
             Controls.Add(oldPassLbl);
             Controls.Add(oldPassBox);
             Controls.Add(confPassLbl);
@@ -229,7 +229,7 @@
             Controls.Add(fullNameLbl);
             Name = "ManageAccountForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "ManageAccountForm";
+            Text = "Manage Account";
             Load += ManageAccountForm_Load;
             Controls.SetChildIndex(navbarControl1, 0);
             Controls.SetChildIndex(fullNameLbl, 0);

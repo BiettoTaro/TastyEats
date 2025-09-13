@@ -202,7 +202,7 @@
             Controls.Add(label1);
             Name = "RegisterForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "RegisterForm";
+            Text = "Register";
             ResumeLayout(false);
             PerformLayout();
         }

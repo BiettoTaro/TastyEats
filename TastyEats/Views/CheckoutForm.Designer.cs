@@ -205,7 +205,7 @@
             // cvvBox
             // 
             cvvBox.Font = new Font("Verdana", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cvvBox.Location = new Point(476, 310);
+            cvvBox.Location = new Point(476, 316);
             cvvBox.Name = "cvvBox";
             cvvBox.Size = new Size(57, 23);
             cvvBox.TabIndex = 15;
@@ -230,6 +230,7 @@
             backBtn.TabIndex = 17;
             backBtn.Text = "BACK";
             backBtn.UseVisualStyleBackColor = true;
+            backBtn.Click += backBtn_Click_1;
             // 
             // errorProvider1
             // 
@@ -282,7 +283,7 @@
             Margin = new Padding(6);
             Name = "CheckoutForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "CheckoutForm";
+            Text = "Checkout";
             Load += CheckoutForm_Load;
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);

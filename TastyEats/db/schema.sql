@@ -1,589 +1,140 @@
---
--- PostgreSQL database dump
---
+-- Drop existing tables in correct order to avoid FK issues
+DROP TABLE IF EXISTS cart_items, carts, order_items, payments, orders, menu_items, categories, customers, admins CASCADE;
 
--- Dumped from database version 14.16 (Homebrew)
--- Dumped by pg_dump version 14.16 (Homebrew)
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- Name: admins; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.admins (
-    admin_id integer NOT NULL,
-    name character varying(30) NOT NULL,
-    email character varying(30) NOT NULL,
-    password_hash character varying(30) NOT NULL,
-    employee_id integer NOT NULL,
-    admin_role character varying(50) NOT NULL
+-- =====================
+-- Customers
+-- =====================
+CREATE TABLE customers (
+    customer_id SERIAL PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    email VARCHAR(30) UNIQUE NOT NULL,
+    password_hash VARCHAR(100) NOT NULL,
+    phone VARCHAR(15),
+    address VARCHAR(255),
+    is_active BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
-
-ALTER TABLE public.admins OWNER TO postgres;
-
---
--- Name: admins_admin_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.admins_admin_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.admins_admin_id_seq OWNER TO postgres;
-
---
--- Name: admins_admin_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.admins_admin_id_seq OWNED BY public.admins.admin_id;
-
-
---
--- Name: cart_items; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.cart_items (
-    cart_item_id integer NOT NULL,
-    cart_id integer NOT NULL,
-    item_id integer NOT NULL,
-    quantity integer NOT NULL
+-- =====================
+-- Admins
+-- =====================
+CREATE TABLE admins (
+    admin_id SERIAL PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    email VARCHAR(30) UNIQUE NOT NULL,
+    password_hash VARCHAR(100) NOT NULL,
+    employee_id INT UNIQUE NOT NULL,
+    admin_role VARCHAR(50) NOT NULL,
+    is_active BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
-
-ALTER TABLE public.cart_items OWNER TO postgres;
-
---
--- Name: cart_items_cart_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.cart_items_cart_item_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.cart_items_cart_item_id_seq OWNER TO postgres;
-
---
--- Name: cart_items_cart_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.cart_items_cart_item_id_seq OWNED BY public.cart_items.cart_item_id;
-
-
---
--- Name: carts; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.carts (
-    cart_id integer NOT NULL,
-    customer_id integer NOT NULL
+-- =====================
+-- Categories
+-- =====================
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    description VARCHAR(500)
 );
 
-
-ALTER TABLE public.carts OWNER TO postgres;
-
---
--- Name: carts_cart_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.carts_cart_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.carts_cart_id_seq OWNER TO postgres;
-
---
--- Name: carts_cart_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.carts_cart_id_seq OWNED BY public.carts.cart_id;
-
-
---
--- Name: categories; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.categories (
-    category_id integer NOT NULL,
-    name character varying(30) NOT NULL,
-    description character varying(500)
+-- =====================
+-- Menu Items
+-- =====================
+CREATE TABLE menu_items (
+    item_id SERIAL PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    description VARCHAR(500),
+    price DECIMAL(10,2) NOT NULL,
+    category_id INT NOT NULL REFERENCES categories(category_id),
+    is_available BOOLEAN NOT NULL DEFAULT TRUE,
+    admin_id INT NOT NULL REFERENCES admins(admin_id),
+    image_path VARCHAR(255) -- <- consistent with your C# mapper
 );
 
-
-ALTER TABLE public.categories OWNER TO postgres;
-
---
--- Name: categories_category_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.categories_category_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.categories_category_id_seq OWNER TO postgres;
-
---
--- Name: categories_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.categories_category_id_seq OWNED BY public.categories.category_id;
-
-
---
--- Name: customers; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.customers (
-    customer_id integer NOT NULL,
-    name character varying(30) NOT NULL,
-    email character varying(30) NOT NULL,
-    password_hash character varying(30) NOT NULL,
-    phone character varying(15),
-    address character varying(255) NOT NULL
+-- =====================
+-- Orders
+-- =====================
+CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    customer_id INT NOT NULL REFERENCES customers(customer_id),
+    order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL
 );
 
-
-ALTER TABLE public.customers OWNER TO postgres;
-
---
--- Name: customers_customer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.customers_customer_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.customers_customer_id_seq OWNER TO postgres;
-
---
--- Name: customers_customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.customers_customer_id_seq OWNED BY public.customers.customer_id;
-
-
---
--- Name: menu_items; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.menu_items (
-    item_id integer NOT NULL,
-    name character varying(30) NOT NULL,
-    description character varying(500),
-    price numeric(10,2) NOT NULL,
-    category_id integer NOT NULL,
-    is_available boolean NOT NULL,
-    admin_id integer NOT NULL
+-- =====================
+-- Order Items
+-- =====================
+CREATE TABLE order_items (
+    order_item_id SERIAL PRIMARY KEY,
+    order_id INT NOT NULL REFERENCES orders(order_id) ON DELETE CASCADE,
+    item_id INT NOT NULL REFERENCES menu_items(item_id),
+    quantity INT NOT NULL,
+    price_at_order DECIMAL(10,2) NOT NULL,
+    notes TEXT
 );
 
-
-ALTER TABLE public.menu_items OWNER TO postgres;
-
---
--- Name: menu_items_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.menu_items_item_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.menu_items_item_id_seq OWNER TO postgres;
-
---
--- Name: menu_items_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.menu_items_item_id_seq OWNED BY public.menu_items.item_id;
-
-
---
--- Name: order_items; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.order_items (
-    order_item_id integer NOT NULL,
-    order_id integer NOT NULL,
-    item_id integer NOT NULL,
-    quantity integer NOT NULL,
-    price_at_order numeric(10,2) NOT NULL
+-- =====================
+-- Payments
+-- =====================
+CREATE TABLE payments (
+    payment_id SERIAL PRIMARY KEY,
+    order_id INT NOT NULL REFERENCES orders(order_id),
+    payment_method VARCHAR(50) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    transaction_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    amount DECIMAL(10,2) NOT NULL
 );
 
-
-ALTER TABLE public.order_items OWNER TO postgres;
-
---
--- Name: order_items_order_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.order_items_order_item_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.order_items_order_item_id_seq OWNER TO postgres;
-
---
--- Name: order_items_order_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.order_items_order_item_id_seq OWNED BY public.order_items.order_item_id;
-
-
---
--- Name: orders; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.orders (
-    order_id integer NOT NULL,
-    customer_id integer NOT NULL,
-    order_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    status character varying(20) NOT NULL,
-    total_amount numeric(10,2) NOT NULL
+-- =====================
+-- Carts
+-- =====================
+CREATE TABLE carts (
+    cart_id SERIAL PRIMARY KEY,
+    customer_id INT NOT NULL REFERENCES customers(customer_id)
 );
 
-
-ALTER TABLE public.orders OWNER TO postgres;
-
---
--- Name: orders_order_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.orders_order_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.orders_order_id_seq OWNER TO postgres;
-
---
--- Name: orders_order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.orders_order_id_seq OWNED BY public.orders.order_id;
-
-
---
--- Name: payments; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.payments (
-    payment_id integer NOT NULL,
-    order_id integer NOT NULL,
-    payment_method character varying(50) NOT NULL,
-    status character varying(20) NOT NULL,
-    transaction_timestamp timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    amount numeric(10,2) NOT NULL
+-- =====================
+-- Cart Items
+-- =====================
+CREATE TABLE cart_items (
+    cart_item_id SERIAL PRIMARY KEY,
+    cart_id INT NOT NULL REFERENCES carts(cart_id) ON DELETE CASCADE,
+    item_id INT NOT NULL REFERENCES menu_items(item_id),
+    quantity INT NOT NULL
 );
 
-
-ALTER TABLE public.payments OWNER TO postgres;
-
---
--- Name: payments_payment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.payments_payment_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.payments_payment_id_seq OWNER TO postgres;
-
---
--- Name: payments_payment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.payments_payment_id_seq OWNED BY public.payments.payment_id;
-
-
---
--- Name: admins admin_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.admins ALTER COLUMN admin_id SET DEFAULT nextval('public.admins_admin_id_seq'::regclass);
-
-
---
--- Name: cart_items cart_item_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cart_items ALTER COLUMN cart_item_id SET DEFAULT nextval('public.cart_items_cart_item_id_seq'::regclass);
-
-
---
--- Name: carts cart_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.carts ALTER COLUMN cart_id SET DEFAULT nextval('public.carts_cart_id_seq'::regclass);
-
-
---
--- Name: categories category_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.categories ALTER COLUMN category_id SET DEFAULT nextval('public.categories_category_id_seq'::regclass);
-
-
---
--- Name: customers customer_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.customers ALTER COLUMN customer_id SET DEFAULT nextval('public.customers_customer_id_seq'::regclass);
-
-
---
--- Name: menu_items item_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.menu_items ALTER COLUMN item_id SET DEFAULT nextval('public.menu_items_item_id_seq'::regclass);
-
-
---
--- Name: order_items order_item_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.order_items ALTER COLUMN order_item_id SET DEFAULT nextval('public.order_items_order_item_id_seq'::regclass);
-
-
---
--- Name: orders order_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.orders ALTER COLUMN order_id SET DEFAULT nextval('public.orders_order_id_seq'::regclass);
-
-
---
--- Name: payments payment_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.payments ALTER COLUMN payment_id SET DEFAULT nextval('public.payments_payment_id_seq'::regclass);
-
-
---
--- Name: admins admins_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.admins
-    ADD CONSTRAINT admins_email_key UNIQUE (email);
-
-
---
--- Name: admins admins_employee_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.admins
-    ADD CONSTRAINT admins_employee_id_key UNIQUE (employee_id);
-
-
---
--- Name: admins admins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.admins
-    ADD CONSTRAINT admins_pkey PRIMARY KEY (admin_id);
-
-
---
--- Name: cart_items cart_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cart_items
-    ADD CONSTRAINT cart_items_pkey PRIMARY KEY (cart_item_id);
-
-
---
--- Name: carts carts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.carts
-    ADD CONSTRAINT carts_pkey PRIMARY KEY (cart_id);
-
-
---
--- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.categories
-    ADD CONSTRAINT categories_pkey PRIMARY KEY (category_id);
-
-
---
--- Name: customers customers_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.customers
-    ADD CONSTRAINT customers_email_key UNIQUE (email);
-
-
---
--- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.customers
-    ADD CONSTRAINT customers_pkey PRIMARY KEY (customer_id);
-
-
---
--- Name: menu_items menu_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.menu_items
-    ADD CONSTRAINT menu_items_pkey PRIMARY KEY (item_id);
-
-
---
--- Name: order_items order_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.order_items
-    ADD CONSTRAINT order_items_pkey PRIMARY KEY (order_item_id);
-
-
---
--- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.orders
-    ADD CONSTRAINT orders_pkey PRIMARY KEY (order_id);
-
-
---
--- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.payments
-    ADD CONSTRAINT payments_pkey PRIMARY KEY (payment_id);
-
-
---
--- Name: cart_items cart_items_cart_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cart_items
-    ADD CONSTRAINT cart_items_cart_id_fkey FOREIGN KEY (cart_id) REFERENCES public.carts(cart_id) ON DELETE CASCADE;
-
-
---
--- Name: cart_items cart_items_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.cart_items
-    ADD CONSTRAINT cart_items_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.menu_items(item_id);
-
-
---
--- Name: carts carts_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.carts
-    ADD CONSTRAINT carts_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(customer_id);
-
-
---
--- Name: menu_items menu_items_admin_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.menu_items
-    ADD CONSTRAINT menu_items_admin_id_fkey FOREIGN KEY (admin_id) REFERENCES public.admins(admin_id);
-
-
---
--- Name: menu_items menu_items_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.menu_items
-    ADD CONSTRAINT menu_items_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(category_id);
-
-
---
--- Name: order_items order_items_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.order_items
-    ADD CONSTRAINT order_items_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.menu_items(item_id);
-
-
---
--- Name: order_items order_items_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.order_items
-    ADD CONSTRAINT order_items_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(order_id) ON DELETE CASCADE;
-
-
---
--- Name: orders orders_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.orders
-    ADD CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(customer_id);
-
-
---
--- Name: payments payments_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.payments
-    ADD CONSTRAINT payments_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(order_id);
-
-
---
--- PostgreSQL database dump complete
---
-
+-- =====================
+-- Seed Data
+-- =====================
+
+-- Admin (password = "password", SHA256 hash matches your AuthController)
+INSERT INTO admins (admin_id, name, email, password_hash, employee_id, admin_role, is_active)
+VALUES
+  (1, 'Admin', 'admin@example.com',
+   '5E884898DA28047151D0E56F8DC6292773603D0D6AABBEDD5C8D6A7DF50A44C3',
+   1, 'Manager', TRUE)
+ON CONFLICT (admin_id) DO NOTHING;
+
+-- Categories
+INSERT INTO categories (category_id, name, description)
+VALUES
+  (1, 'Starters', 'Appetizers and small plates'),
+  (2, 'Mains', 'Main dishes'),
+  (3, 'Desserts', 'Sweet dishes'),
+  (4, 'Drinks', 'Beverages')
+ON CONFLICT (category_id) DO NOTHING;
+
+-- Menu Items
+INSERT INTO menu_items (item_id, name, description, price, image_path, category_id, admin_id, is_available)
+VALUES
+  (1, 'Tagliere Salumi & Formaggi', 'Charcuterie board with cured meats and cheese', 12.00, 'images/tagliere_salumi.jpg', 1, 1, TRUE),
+  (2, 'Fregola allo Scoglio', 'Sardinian pasta with seafood', 25.00, 'images/fregola.jpg', 2, 1, TRUE),
+  (3, 'Porcetto con Patate', 'Roasted suckling pig with potatoes', 27.00, 'images/porcetto.jpg', 2, 1, TRUE),
+  (4, 'Seadas', 'Sardinian pastry filled with cheese served with sugar or honey', 10.00, 'images/seadas.jpg', 3, 1, TRUE),
+  (5, 'Tiramisu', 'Classic Italian dessert made with ladyfingers, mascarpone and coffee', 9.00, 'images/tiramisu.jpg', 3, 1, TRUE),
+  (6, 'Panna Cotta', 'Classic Italian dessert served with fresh berries', 8.00, 'images/panna_cotta.jpg', 3, 1, TRUE),
+  (7, 'Cozze Gratinate', 'Gratinated mussels with herbs and breadcrumbs', 13.00, 'images/cozze_gratinate.jpg', 1, 1, TRUE),
+  (8, 'Insalata di Polpi', 'Octopus salad with potatoes, celery, and parsley', 15.00, 'images/insalata_di_polpi.jpg', 1, 1, TRUE)
+ON CONFLICT (item_id) DO NOTHING;

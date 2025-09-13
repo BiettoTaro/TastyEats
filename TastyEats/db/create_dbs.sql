@@ -1,5 +1,5 @@
-CREATE DATABASE tastyeats;
-CREATE DATABASE tastyeats_test;
+CREATE DATABASE tastyeats WITH OWNER = postgres;
+CREATE DATABASE tastyeats_test WITH OWNER = postgres;;
 
 \connect tastyeats
 \i /docker-entrypoint-initdb.d/schema.sql

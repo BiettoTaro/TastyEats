@@ -28,31 +28,33 @@
             // 
             // navbarControl1
             // 
-            navbarControl1.Size = new Size(663, 52);
+            navbarControl1.AutoSize = true;
+            navbarControl1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            navbarControl1.Size = new Size(619, 33);
             // 
             // cartPanel
             // 
             cartPanel.AutoScroll = true;
             cartPanel.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cartPanel.Location = new Point(14, 60);
+            cartPanel.Location = new Point(12, 39);
             cartPanel.Name = "cartPanel";
-            cartPanel.Size = new Size(640, 232);
+            cartPanel.Size = new Size(595, 258);
             cartPanel.TabIndex = 0;
             // 
             // totalLabel
             // 
             totalLabel.Font = new Font("Verdana", 10F, FontStyle.Bold);
-            totalLabel.Location = new Point(14, 299);
+            totalLabel.Location = new Point(12, 307);
             totalLabel.Name = "totalLabel";
-            totalLabel.Size = new Size(229, 21);
+            totalLabel.Size = new Size(254, 20);
             totalLabel.TabIndex = 1;
             totalLabel.Text = "Total: £0.00";
             // 
             // btnCheckout
             // 
-            btnCheckout.Location = new Point(539, 299);
+            btnCheckout.Location = new Point(502, 303);
             btnCheckout.Name = "btnCheckout";
-            btnCheckout.Size = new Size(114, 28);
+            btnCheckout.Size = new Size(105, 24);
             btnCheckout.TabIndex = 2;
             btnCheckout.Text = "Checkout";
             btnCheckout.UseVisualStyleBackColor = true;
@@ -60,9 +62,9 @@
             // 
             // btnClearCart
             // 
-            btnClearCart.Location = new Point(418, 299);
+            btnClearCart.Location = new Point(392, 303);
             btnClearCart.Name = "btnClearCart";
-            btnClearCart.Size = new Size(114, 28);
+            btnClearCart.Size = new Size(104, 24);
             btnClearCart.TabIndex = 3;
             btnClearCart.Text = "Clear Cart";
             btnClearCart.UseVisualStyleBackColor = true;
@@ -72,7 +74,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(663, 337);
+            ClientSize = new Size(619, 335);
             Controls.Add(btnClearCart);
             Controls.Add(btnCheckout);
             Controls.Add(totalLabel);
@@ -88,6 +90,7 @@
             Controls.SetChildIndex(btnClearCart, 0);
             Controls.SetChildIndex(navbarControl1, 0);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

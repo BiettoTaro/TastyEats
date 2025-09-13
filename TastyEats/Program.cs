@@ -1,5 +1,7 @@
 using TastyEats.Data;
 using TastyEats.Views;
+using System;
+using System.Windows.Forms;
 
 namespace TastyEats
 {
@@ -11,11 +13,15 @@ namespace TastyEats
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            // Enable DPI awareness explicitly to fix scaling issues on high DPI displays
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Seed the database
             DatabaseSeeder.Seed();
 
-            ApplicationConfiguration.Initialize();
+            // Start the app
             Application.Run(new HomeForm());
         }
     }

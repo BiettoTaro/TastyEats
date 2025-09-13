@@ -102,5 +102,19 @@ namespace TastyEats.Controllers
             return p;
         }
 
+        public static MenuItem? GetMenuItemById(int id)
+        {
+            var dt = DatabaseHandler.ExecuteQuery(
+                "SELECT item_id, name, description, price, image_path, category_id, admin_id, is_available " +
+                "FROM menu_items WHERE item_id=@id",
+                new Dictionary<string, object> { ["@id"] = id }
+            );
+
+            if (dt.Rows.Count == 0) return null;
+
+            return MapMenuItem(dt.Rows[0]);
+        }
+
+
     }
 }

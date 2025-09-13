@@ -17,7 +17,7 @@ namespace TastyEats.Views
     public partial class CheckoutForm : Form
     {
         User user = AuthController.CurrentUser;
-        
+
 
         public CheckoutForm()
         {
@@ -116,8 +116,12 @@ namespace TastyEats.Views
             }
         }
 
-
-
-
+        private void backBtn_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            var cartForm = new CartForm();
+            cartForm.ShowDialog();
+            this.Close();
+        }
     }
 }

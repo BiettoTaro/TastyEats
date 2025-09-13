@@ -65,6 +65,13 @@ namespace TastyEats
 
         private void InitializeComponent()
         {
+            SuspendLayout();
+            // 
+            // BaseForm
+            // 
+            ClientSize = new Size(1984, 473);
+            Name = "BaseForm";
+            ResumeLayout(false);
 
         }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TastyEats.Models;
 
 namespace TastyEats.Views
 {
@@ -68,90 +69,85 @@ namespace TastyEats.Views
             totalLabel.Text = "Total: £0.00";
         }
 
-        private void AddCartRow(Models.CartItem item)
+        private void AddCartRow(CartItem item)
         {
-            var row = new Panel
+            var row = new TableLayoutPanel
             {
-                Width = cartPanel.ClientSize.Width - 30,
-                Height = 90,
-                BorderStyle = BorderStyle.FixedSingle,
-                Margin = new Padding(5)
+                ColumnCount = 4,
+                AutoSize = true,
+                Dock = DockStyle.Top,
+                Padding = new Padding(5),
             };
 
-            var lblName = new Label
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 500));  // Name
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95)); // Qty box
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));     // Remove btn
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30));  // Line total
+
+            // Name
+            var nameLabel = new Label
             {
                 Text = item.Name,
-                Location = new Point(10, 10),
                 AutoSize = true,
-                MaximumSize = new Size(220, 0)
+                Width = 500,
+                Height = 40,
+                MaximumSize = new Size(500, 0), 
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                Anchor = AnchorStyles.Left,
+                TextAlign = ContentAlignment.MiddleLeft
             };
 
-            var lblUnit = new Label
-            {
-                Text = $"£{item.Price:F2} each",
-                Location = new Point(10, 35),
-                AutoSize = true
-            };
-
+            // Quantity box (wider so arrows are visible)
             var numQty = new NumericUpDown
             {
                 Minimum = 1,
-                Maximum = 99,
                 Value = item.Quantity,
-                Location = new Point(250, 10),
-                Width = 50
+                Width = 85,
+                Anchor = AnchorStyles.Left,
+                Location = new Point(150, 5)
             };
-
-            var lblLineTotal = new Label
+            numQty.ValueChanged += (s, e) =>
             {
-                Text = $"Line: £{(item.Price * item.Quantity):F2}",
-                Location = new Point(250, 40),
-                AutoSize = true
+                Controllers.CartController.UpdateLine(item.LineId, (int)numQty.Value, item.Notes);
+                LoadCartItems();
             };
 
-            var txtNotes = new TextBox
-            {
-                Text = item.Notes ?? string.Empty,
-                Location = new Point(10, 60),
-                Width = 300,
-                Height = 20
-            };
-            txtNotes.TextChanged += (s, e) =>
-                Controllers.CartController.UpdateLine(item.LineId, (int)numQty.Value, txtNotes.Text);
-
+            // Remove button
             var btnRemove = new Button
             {
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink,
                 Text = (item.Quantity > 1) ? "Remove One" : "Remove",
-                Location = new Point(320, 8),
-                
+                AutoSize = true,
+                Anchor = AnchorStyles.Left
             };
             btnRemove.Click += (s, e) =>
             {
-                if (numQty.Value > 1)
+                if (item.Quantity > 1)
                     Controllers.CartController.RemoveOne(item.LineId);
                 else
                     Controllers.CartController.RemoveLine(item.LineId);
+
+                LoadCartItems();
             };
 
-            numQty.ValueChanged += (s, e) =>
+            // Line total
+            var lineTotal = new Label
             {
-                lblLineTotal.Text = $"Line: £{(item.Price * (int)numQty.Value):F2}";
-                btnRemove.Text = (numQty.Value > 1) ? "Remove One" : "Remove";
-
-                Controllers.CartController.UpdateLine(item.LineId, (int)numQty.Value, txtNotes.Text);
+                Text = $"Line: £{item.TotalPrice:F2}",
+                AutoSize = true,
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                Anchor = AnchorStyles.Left
             };
 
-            row.Controls.Add(lblName);
-            row.Controls.Add(lblUnit);
-            row.Controls.Add(numQty);
-            row.Controls.Add(lblLineTotal);
-            row.Controls.Add(btnRemove);
-            row.Controls.Add(txtNotes);
+            // Add to row
+            row.Controls.Add(nameLabel, 0, 0);
+            row.Controls.Add(numQty, 1, 0);
+            row.Controls.Add(btnRemove, 2, 0);
+            row.Controls.Add(lineTotal, 3, 0);
 
             cartPanel.Controls.Add(row);
         }
+
+
 
         //   selective update 
         private void UpdateCartDisplay(Models.CartItem item, string action)
