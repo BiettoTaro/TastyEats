@@ -57,6 +57,8 @@ Password: postgres123
 
 Database: tastyeats
 
+(You can comment out one of the IP I am using for development and uncomment "localhost")
+
 ## Running Tests
 
 The integration tests run automatically against tastyeats_test.

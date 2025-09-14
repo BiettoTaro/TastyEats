@@ -79,7 +79,7 @@ namespace TastyEats.Views
                 Padding = new Padding(5),
             };
 
-            row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 500));  // Name
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200));  // Name
             row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 95)); // Qty box
             row.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));     // Remove btn
             row.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30));  // Line total
@@ -89,9 +89,9 @@ namespace TastyEats.Views
             {
                 Text = item.Name,
                 AutoSize = true,
-                Width = 500,
+                Width = 200,
                 Height = 40,
-                MaximumSize = new Size(500, 0), 
+                MaximumSize = new Size(200, 0), 
                 Font = new Font("Verdana", 10, FontStyle.Bold),
                 Anchor = AnchorStyles.Left,
                 TextAlign = ContentAlignment.MiddleLeft
