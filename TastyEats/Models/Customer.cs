@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TastyEats.Models
 {
+    // Customer inherits from User
     public class Customer : User
     {
         

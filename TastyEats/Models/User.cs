@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TastyEats.Models
 {
+    // User base class for Admin and Customer
     public abstract class User
     {
         public int Id { get; set; }

@@ -87,7 +87,7 @@
             // confirmPasswordBox
             // 
             confirmPasswordBox.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            confirmPasswordBox.Location = new Point(192, 279);
+            confirmPasswordBox.Location = new Point(192, 283);
             confirmPasswordBox.Name = "confirmPasswordBox";
             confirmPasswordBox.PlaceholderText = "Confirm Password";
             confirmPasswordBox.Size = new Size(151, 22);
@@ -97,7 +97,7 @@
             // nameBox
             // 
             nameBox.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            nameBox.Location = new Point(192, 112);
+            nameBox.Location = new Point(192, 116);
             nameBox.Name = "nameBox";
             nameBox.PlaceholderText = "Enter your name";
             nameBox.Size = new Size(151, 22);
@@ -125,7 +125,7 @@
             // 
             emailLbl.AutoSize = true;
             emailLbl.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            emailLbl.Location = new Point(48, 73);
+            emailLbl.Location = new Point(39, 73);
             emailLbl.Name = "emailLbl";
             emailLbl.Size = new Size(47, 16);
             emailLbl.TabIndex = 23;
@@ -135,7 +135,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label2.Location = new Point(48, 118);
+            label2.Location = new Point(41, 118);
             label2.Name = "label2";
             label2.Size = new Size(78, 16);
             label2.TabIndex = 24;
@@ -145,7 +145,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label3.Location = new Point(48, 157);
+            label3.Location = new Point(41, 157);
             label3.Name = "label3";
             label3.Size = new Size(75, 16);
             label3.TabIndex = 25;
@@ -155,7 +155,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label4.Location = new Point(48, 204);
+            label4.Location = new Point(39, 204);
             label4.Name = "label4";
             label4.Size = new Size(65, 16);
             label4.TabIndex = 26;
@@ -165,7 +165,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label5.Location = new Point(48, 247);
+            label5.Location = new Point(39, 247);
             label5.Name = "label5";
             label5.Size = new Size(77, 16);
             label5.TabIndex = 27;
@@ -175,7 +175,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Verdana", 9.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label6.Location = new Point(48, 285);
+            label6.Location = new Point(39, 285);
             label6.Name = "label6";
             label6.Size = new Size(138, 16);
             label6.TabIndex = 28;

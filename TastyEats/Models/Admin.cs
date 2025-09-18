@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace TastyEats.Models
 {
+    // Admin inherits from User
     public class Admin : User
     {
-        
-  
         public bool IsActive { get; set; } = true;
         public string Role { get; set; } 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

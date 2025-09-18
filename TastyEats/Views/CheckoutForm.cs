@@ -53,14 +53,6 @@ namespace TastyEats.Views
             }
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            bool isCash = radioButton1.Checked;
-            cardNameBox.Enabled = !isCash;
-            cardNumberBox.Enabled = !isCash;
-            expDtp.Enabled = !isCash;
-            cvvBox.Enabled = !isCash;
-        }
 
         private void orderBtn_Click(object sender, EventArgs e)
         {
@@ -76,7 +68,7 @@ namespace TastyEats.Views
                 return;
             }
 
-            bool isCardPayment = !radioButton1.Checked; // radioButton1 = cash
+            bool isCardPayment = !checkBox1.Checked; // radioButton1 = cash
 
             if (isCardPayment)
             {
@@ -122,6 +114,15 @@ namespace TastyEats.Views
             var cartForm = new CartForm();
             cartForm.ShowDialog();
             this.Close();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isCash = checkBox1.Checked;
+            cardNameBox.Enabled = !isCash;
+            cardNumberBox.Enabled = !isCash;
+            expDtp.Enabled = !isCash;
+            cvvBox.Enabled = !isCash;
         }
     }
 }

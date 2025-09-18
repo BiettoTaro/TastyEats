@@ -37,7 +37,6 @@
             emailBox = new TextBox();
             addressBox = new RichTextBox();
             label1 = new Label();
-            radioButton1 = new RadioButton();
             cardNameLbl = new Label();
             cardNameBox = new TextBox();
             cardNumberLbl = new Label();
@@ -50,6 +49,7 @@
             errorProvider1 = new ErrorProvider(components);
             phoneLbl = new Label();
             phoneBox = new TextBox();
+            checkBox1 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
@@ -127,19 +127,6 @@
             label1.Size = new Size(204, 25);
             label1.TabIndex = 7;
             label1.Text = "Payment Details";
-            // 
-            // radioButton1
-            // 
-            radioButton1.AutoSize = true;
-            radioButton1.Font = new Font("Verdana", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            radioButton1.Location = new Point(346, 392);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(125, 20);
-            radioButton1.TabIndex = 8;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Pay with cash";
-            radioButton1.UseVisualStyleBackColor = true;
-            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
             // 
             // cardNameLbl
             // 
@@ -254,11 +241,24 @@
             phoneBox.Size = new Size(187, 23);
             phoneBox.TabIndex = 19;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Font = new Font("Verdana", 9.75F, FontStyle.Bold);
+            checkBox1.Location = new Point(346, 378);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(126, 20);
+            checkBox1.TabIndex = 20;
+            checkBox1.Text = "Pay with cash";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // CheckoutForm
             // 
             AutoScaleDimensions = new SizeF(15F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(604, 512);
+            Controls.Add(checkBox1);
             Controls.Add(phoneBox);
             Controls.Add(phoneLbl);
             Controls.Add(backBtn);
@@ -270,7 +270,6 @@
             Controls.Add(cardNumberLbl);
             Controls.Add(cardNameBox);
             Controls.Add(cardNameLbl);
-            Controls.Add(radioButton1);
             Controls.Add(label1);
             Controls.Add(addressBox);
             Controls.Add(emailBox);
@@ -300,7 +299,6 @@
         private TextBox emailBox;
         private RichTextBox addressBox;
         private Label label1;
-        private RadioButton radioButton1;
         private Label cardNameLbl;
         private TextBox cardNameBox;
         private Label cardNumberLbl;
@@ -313,5 +311,6 @@
         private ErrorProvider errorProvider1;
         private TextBox phoneBox;
         private Label phoneLbl;
+        private CheckBox checkBox1;
     }
 }

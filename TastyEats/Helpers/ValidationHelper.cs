@@ -10,7 +10,8 @@ namespace TastyEats.Helpers
     public static class ValidationHelper
     {
 
-        public static string? ValidateRegistration(string email, string name, string phone, string address, string password, string confirmPassword)
+        public static string? ValidateRegistration(string email, string name, string phone, string address,
+            string password, string confirmPassword)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(name)
                 || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(address)
@@ -60,20 +61,40 @@ namespace TastyEats.Helpers
 
         public static string? ValidateCardDetails(string cardName, string cardNumber, string cvv, DateTime expiry)
         {
+            // Check required fields
             if (string.IsNullOrWhiteSpace(cardName) ||
                 string.IsNullOrWhiteSpace(cardNumber) ||
-                string.IsNullOrWhiteSpace(cvv) ||
-                expiry < DateTime.Now)
+                string.IsNullOrWhiteSpace(cvv))
+            {
                 return "Please fill in all card details.";
+            }
 
-            var cardPattern = @"^(?:\d{4}[- ]?){3}\d{4}$";
-            if (!Regex.IsMatch(cardNumber, cardPattern))
-                return "Card number format is invalid.";
+            // Normalise card number 
+            string cleanNumber = cardNumber.Replace(" ", "").Replace("-", "");
 
+            // Validate card number (16 digits only)
+            if (!Regex.IsMatch(cleanNumber, @"^\d{16}$"))
+            {
+                return "Card number must be exactly 16 digits.";
+            }
+
+            // 4. Validate CVV (3 or 4 digits)
             if (!Regex.IsMatch(cvv, @"^\d{3,4}$"))
+            {
                 return "CVV must be 3 or 4 digits.";
+            }
 
-            return null; // All valid!
+            // Validate expiry date (end of expiry month must be >= today)
+            var lastDayOfExpiryMonth = new DateTime(expiry.Year, expiry.Month,
+                                                    DateTime.DaysInMonth(expiry.Year, expiry.Month));
+            if (lastDayOfExpiryMonth < DateTime.Now.Date)
+            {
+                return "Card has expired.";
+            }
+
+            // Passed all checks
+            return null;
         }
+
     }
 }
